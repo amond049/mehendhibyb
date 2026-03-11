@@ -9,7 +9,7 @@ export default function RootLayout({ children }: any) {
 
   return (
     <html>
-      <body>
+      <body className="bg-neutral-200 min-h-screen">
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
         <main

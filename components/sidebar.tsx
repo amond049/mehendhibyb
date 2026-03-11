@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X, Home, Users, Settings } from "lucide-react";
+import { Menu, X, Home, Calendar, Store } from "lucide-react";
 
 export default function Sidebar({ collapsed, setCollapsed }: any) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const items = [
-    { name: "Dashboard", icon: Home },
-    { name: "Users", icon: Users },
-    { name: "Settings", icon: Settings },
+    { name: "Home", icon: Home },
+    { name: "Bookings", icon: Calendar },
+    { name: "Store", icon: Store },
   ];
 
   return (
@@ -33,7 +33,7 @@ export default function Sidebar({ collapsed, setCollapsed }: any) {
       {/* SIDEBAR */}
       <aside
         className={`
-        fixed top-0 left-0 z-50 h-screen bg-gray-900 text-white
+        fixed top-0 left-0 z-50 h-screen bg-white text-black
         transition-all duration-300
 
         w-full
