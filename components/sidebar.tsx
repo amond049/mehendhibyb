@@ -5,6 +5,7 @@ import { Menu, X, Home, Calendar, Store } from "lucide-react";
 
 export default function Sidebar({ collapsed, setCollapsed }: any) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState("Home");
 
   const items = [
     { name: "Home", icon: Home },
@@ -52,26 +53,51 @@ export default function Sidebar({ collapsed, setCollapsed }: any) {
             <Menu />
           </button>
 
-          <button
-            onClick={() => setMobileOpen(false)}
-            className="md:hidden"
-          >
+          <button onClick={() => setMobileOpen(false)} className="md:hidden">
             <X />
           </button>
         </div>
 
         {/* NAV ITEMS */}
-        <nav className="space-y-6 mt-10 px-4">
+        <nav className="space-y-2 mt-10 px-2">
           {items.map((item, i) => {
             const Icon = item.icon;
+            const isActive = activeItem === item.name;
 
             return (
               <div
                 key={i}
-                className="flex items-center gap-4 hover:bg-gray-800 p-2 rounded cursor-pointer"
+                onClick={() => setActiveItem(item.name)}
+                className={`
+                  group flex items-center gap-4
+                  p-3 rounded cursor-pointer
+                  border-l-4 transition-all duration-200
+
+                  ${
+                    isActive
+                      ? "bg-gray-900 text-white border-yellow-500"
+                      : "border-transparent hover:border-yellow-500 hover:bg-gray-900"
+                  }
+                `}
               >
-                <Icon size={24} />
-                {!collapsed && <span className="text-lg">{item.name}</span>}
+                <Icon
+                  size={24}
+                  className={`
+                    transition-colors
+                    ${isActive ? "text-white" : "text-black group-hover:text-white"}
+                  `}
+                />
+
+                {!collapsed && (
+                  <span
+                    className={`
+                      text-lg transition-colors
+                      ${isActive ? "text-white" : "text-black group-hover:text-white"}
+                    `}
+                  >
+                    {item.name}
+                  </span>
+                )}
               </div>
             );
           })}

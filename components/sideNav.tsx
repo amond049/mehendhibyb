@@ -10,22 +10,28 @@ export default function SideNav() {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        let visibleSection = activeSection
+
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
+            visibleSection = entry.target.id
           }
         })
+
+        if (visibleSection !== activeSection) {
+          setActiveSection(visibleSection)
+        }
       },
       {
-        rootMargin: "-40% 0px -40% 0px",
-        threshold: 0.1,
+        rootMargin: "-45% 0px -45% 0px",
+        threshold: 0,
       }
     )
 
     sections.forEach((section) => observer.observe(section))
 
     return () => observer.disconnect()
-  }, [])
+  }, [activeSection])
 
   const linkStyle = (id: string) =>
     activeSection === id
