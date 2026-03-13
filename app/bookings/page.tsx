@@ -1,51 +1,58 @@
+"use client"
+
+import { useTranslation } from "react-i18next";
+
 export default function BookingPage() {
+  const { t } = useTranslation();
+
   return (
-    <main className="min-h-screen bg-neutral-200 flex justify-center px-6 py-20">
-
-      <div className="max-w-3xl w-full bg-white rounded-2xl shadow-lg p-10">
-
+    // TODO: PARAMETERIZE THIS
+    <main className="min-h-screen bg-[var(--booking-page-background)] flex justify-center px-6 py-20">
+      {/* TODO: PARAMETERIZE THIS */}
+      <div className="max-w-3xl w-full bg-[var(--booking-page-form-background)] rounded-2xl shadow-lg p-10">
+        {/* TODO: PARAMETERIZE THIS */}
         <h1 className="text-4xl italic text-center mb-10">
-          Book an Appointment
+          {t("bookingPage.bookAnAppointment")}
         </h1>
 
         <form className="space-y-6">
 
           <div>
             <label className="block mb-1 font-medium">
-              Name
+              {t("bookingPage.name")}
             </label>
             <input
               type="text"
-              placeholder="Your name"
+              placeholder={t("bookingPage.namePlaceholder")}
               className="w-full border rounded-lg px-4 py-2"
             />
           </div>
 
           <div>
             <label className="block mb-1 font-medium">
-              Email
+              {t("bookingPage.email")}
             </label>
             <input
               type="email"
-              placeholder="your@email.com"
+              placeholder={t("bookingPage.emailPlaceholder")}
               className="w-full border rounded-lg px-4 py-2"
             />
           </div>
 
           <div>
             <label className="block mb-1 font-medium">
-              Service
+              {t('bookingPage.service')}
             </label>
             <select className="w-full border rounded-lg px-4 py-2">
-              <option>Service 1</option>
-              <option>Service 2</option>
-              <option>Service 3</option>
+              <option>{t('bookingPage.service1')}</option>
+              <option>{t('bookingPage.service2')}</option>
+              <option>{t('bookingPage.service3')}</option>
             </select>
           </div>
 
           <div>
             <label className="block mb-1 font-medium">
-              Date
+              {t('bookingPage.date')}
             </label>
             <input
               type="date"
@@ -55,19 +62,19 @@ export default function BookingPage() {
 
           <div>
             <label className="block mb-1 font-medium">
-              Message
+              {t('bookingPage.message')}
             </label>
             <textarea
-              placeholder="Optional notes..."
+              placeholder={t('bookingPage.messagePlaceholder')}
               className="w-full border rounded-lg px-4 py-2 h-28"
             />
           </div>
-
           <button
             type="submit"
             className="w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-black transition"
           >
-            Request Booking
+            {/* TODO: Will need to add functionality here to send email off to the right person when this button is clicked */}
+            {t('bookingPage.requestBooking')}
           </button>
 
         </form>

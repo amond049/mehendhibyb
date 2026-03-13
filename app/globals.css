@@ -39,3 +39,9 @@ html, body {
 .animate-carousel {
   animation: carousel-scroll 35s linear infinite;
 }
+
+:root {
+  /* background colour for the booking page*/
+  --booking-page-background: #e5e5e5;
+  --booking-page-form-bcakground: #ffffff;
+}
