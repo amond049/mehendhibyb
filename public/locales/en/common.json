@@ -13,5 +13,10 @@
         "message": "Message",
         "messagePlaceholder": "Optional notes...",
         "requestBooking": "Request Booking"
+    },
+    "cartPage": {
+        "yourCart": "Your Cart",
+        "emptyCart": "Your cart is empty.",
+        "remove": "Remove"
     }
 }

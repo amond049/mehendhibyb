@@ -43,5 +43,10 @@ html, body {
 :root {
   /* background colour for the booking page*/
   --booking-page-background: #e5e5e5;
-  --booking-page-form-bcakground: #ffffff;
+  --booking-page-form-bcakground: #fff;
+  --cart-page-background: ##e5e5e5;
+  --cart-page-form-background: #fff;
+  --cart-page-empty-cart-text: ##4b5563;
+  --cart-page-item-price-text: #4b5563;
+  --cart-page-remove-button-text: #ef4444;
 }

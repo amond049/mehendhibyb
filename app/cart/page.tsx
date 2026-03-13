@@ -1,19 +1,21 @@
 "use client";
 
 import { useCart } from "@/components/cartContext";
+import { useTranslation } from "react-i18next";
 
 export default function CartPage() {
   const { cart, removeFromCart } = useCart();
-
+  const { t } = useTranslation();
+  
   return (
-    <main className="min-h-screen bg-neutral-200 flex justify-center px-6 py-20">
+    <main className="min-h-screen bg-[var(--cart-page-background)] flex justify-center px-6 py-20">
 
-      <div className="max-w-3xl w-full bg-white p-10 rounded-2xl shadow">
+      <div className="max-w-3xl w-full bg-[var(--cart-page-form-background)] p-10 rounded-2xl shadow">
 
-        <h1 className="text-4xl italic mb-8">Your Cart</h1>
+        <h1 className="text-4xl italic mb-8">{t("cartPage.yourCart")}</h1>
 
         {cart.length === 0 && (
-          <p className="text-gray-600">Your cart is empty.</p>
+          <p className="text-[var(--cart-page-empty-cart-text)]">{t("cartPage.emptyCart")}</p>
         )}
 
         <div className="space-y-6">
@@ -33,16 +35,16 @@ export default function CartPage() {
 
                 <div>
                   <p className="font-semibold">{item.name}</p>
-                  <p className="text-gray-600">{item.price}</p>
+                  <p className="text-[var(--cart-page-item-price-text)]">{item.price}</p>
                 </div>
 
               </div>
 
               <button
                 onClick={() => removeFromCart(i)}
-                className="text-red-500 hover:underline"
+                className="text-[var(--cart-page-remove-button-text)] hover:underline"
               >
-                Remove
+                {t("cartPage.remove")}
               </button>
 
             </div>
