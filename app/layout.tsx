@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Sidebar from "@/components/sidebar";
 import './globals.css'
+import { CartProvider } from "@/components/cartContext";
 
 export default function RootLayout({ children }: any) {
   const [collapsed, setCollapsed] = useState(false);
@@ -10,6 +11,7 @@ export default function RootLayout({ children }: any) {
   return (
     <html>
       <body className="bg-neutral-200 min-h-screen">
+        <CartProvider>
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
         <main
@@ -21,6 +23,7 @@ export default function RootLayout({ children }: any) {
         >
           {children}
         </main>
+        </CartProvider>
       </body>
     </html>
   );
