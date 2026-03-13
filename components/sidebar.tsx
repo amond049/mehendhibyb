@@ -1,16 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X, Home, Calendar, Store } from "lucide-react";
+import { Menu, X, Home, Calendar, Store, ShoppingBag } from "lucide-react";
+import Link from "next/link";
 
 export default function Sidebar({ collapsed, setCollapsed }: any) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("Home");
 
   const items = [
-    { name: "Home", icon: Home },
-    { name: "Bookings", icon: Calendar },
-    { name: "Store", icon: Store },
+    { name: "Home", icon: Home, href: "/" },
+    { name: "Bookings", icon: Calendar, href: "/bookings" },
+    { name: "Store", icon: Store, href: "/store" },
+    { name: "Custom Orders", icon: ShoppingBag, href: "/custom-orders" },
   ];
 
   return (
@@ -65,9 +67,13 @@ export default function Sidebar({ collapsed, setCollapsed }: any) {
             const isActive = activeItem === item.name;
 
             return (
-              <div
+              <Link
                 key={i}
-                onClick={() => setActiveItem(item.name)}
+                href={item.href}
+                onClick={() => {
+                  setActiveItem(item.name);
+                  setMobileOpen(false);
+                }}
                 className={`
                   group flex items-center gap-4
                   p-3 rounded cursor-pointer
@@ -84,7 +90,11 @@ export default function Sidebar({ collapsed, setCollapsed }: any) {
                   size={24}
                   className={`
                     transition-colors
-                    ${isActive ? "text-white" : "text-black group-hover:text-white"}
+                    ${
+                      isActive
+                        ? "text-white"
+                        : "text-black group-hover:text-white"
+                    }
                   `}
                 />
 
@@ -92,13 +102,17 @@ export default function Sidebar({ collapsed, setCollapsed }: any) {
                   <span
                     className={`
                       text-lg transition-colors
-                      ${isActive ? "text-white" : "text-black group-hover:text-white"}
+                      ${
+                        isActive
+                          ? "text-white"
+                          : "text-black group-hover:text-white"
+                      }
                     `}
                   >
                     {item.name}
                   </span>
                 )}
-              </div>
+              </Link>
             );
           })}
         </nav>

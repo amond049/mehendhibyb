@@ -4,13 +4,13 @@ export default function Banner() {
       <div
         className="
           w-full
-          max-w-6xl
+          max-w-5xl
           h-40 sm:h-56 md:h-72
           rounded-3xl
           flex
           items-center
           justify-center
-          bg-[#2E3022]
+          bg-gradient-to-r from-[#2E3022] to-[#3A3D2A]
         "
       >
         <h1

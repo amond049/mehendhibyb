@@ -2,25 +2,22 @@ import Banner from "@/components/banner"
 import WelcomeSection from "@/components/welcomeSection"
 import ServicesSection from "@/components/ourServicesSection"
 import SideNav from "@/components/sideNav"
+import ContactSection from "@/components/contactUsSection"
 
 export default function Home() {
   return (
-    <main className="bg-neutral-200 min-h-screen">
+    <main className="bg-neutral-200 min-h-screen md:ml-16">
 
-      <Banner />
+  <SideNav />
 
-      <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_200px] gap-10 px-6">
+  <Banner />
 
-        <div>
-          <WelcomeSection />
-          <ServicesSection />
-          {/* ContactSection later */}
-        </div>
+  <div className="max-w-6xl mx-auto px-6">
+    <WelcomeSection />
+    <ServicesSection />
+    <ContactSection/>
+  </div>
 
-        <SideNav />
-
-      </div>
-
-    </main>
+</main>
   )
 }

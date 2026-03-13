@@ -63,7 +63,7 @@ export default function ServicesSection() {
         </div>
 
         {/* Title */}
-        <h2 className="text-center text-3xl md:text-5xl italic mb-10">
+        <h2 className="text-center text-3xl sm:text-4xl md:text-5xl italic font-semibold mb-6 sm:mb-10">
           Our Services
         </h2>
 
