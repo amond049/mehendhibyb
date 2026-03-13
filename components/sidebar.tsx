@@ -12,7 +12,7 @@ export default function Sidebar({ collapsed, setCollapsed }: any) {
     { name: "Home", icon: Home, href: "/" },
     { name: "Bookings", icon: Calendar, href: "/bookings" },
     { name: "Store", icon: Store, href: "/store" },
-    { name: "Custom Orders", icon: ShoppingBag, href: "/custom-orders" },
+    { name: "Custom Orders", icon: ShoppingBag, href: "/customorders" },
   ];
 
   return (
