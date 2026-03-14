@@ -6,7 +6,7 @@ import ContactSection from "@/components/contactUsSection"
 
 export default function Home() {
   return (
-    <main className="bg-neutral-200 min-h-screen md:ml-16">
+    <main className="bg-[var(--home-page-background)] min-h-screen md:ml-16">
 
   <SideNav />
 

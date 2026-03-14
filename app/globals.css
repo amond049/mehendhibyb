@@ -64,4 +64,7 @@ html, body {
 
   /* colours for the layout.tsx file, this controls the colours for everything */
   --layout-background: #e5e5e5;
+
+  /* colours for the page.tsx file, this is the home page */
+  --home-page-background: #e5e5e5;
 }
