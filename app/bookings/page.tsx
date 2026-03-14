@@ -6,11 +6,8 @@ export default function BookingPage() {
   const { t } = useTranslation();
 
   return (
-    // TODO: PARAMETERIZE THIS
     <main className="min-h-screen bg-[var(--booking-page-background)] flex justify-center px-6 py-20">
-      {/* TODO: PARAMETERIZE THIS */}
       <div className="max-w-3xl w-full bg-[var(--booking-page-form-background)] rounded-2xl shadow-lg p-10">
-        {/* TODO: PARAMETERIZE THIS */}
         <h1 className="text-4xl italic text-center mb-10">
           {t("bookingPage.bookAnAppointment")}
         </h1>

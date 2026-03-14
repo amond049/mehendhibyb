@@ -49,4 +49,12 @@ html, body {
   --cart-page-empty-cart-text: ##4b5563;
   --cart-page-item-price-text: #4b5563;
   --cart-page-remove-button-text: #ef4444;
+  --custom-orders-page-background: #e5e5e5;
+  --custom-orders-page-form-background: #fff;
+  --custom-orders-page-name-label-outline: #eab308;
+  --custom-orders-page-contact-information-label-outline: #eab308;
+  --custom-orders-page-order-details-label-outline: #eab308;
+  --custom-orders-page-submit-button-background: #111827;
+  --custom-orders-page-submit-button-hover: #000;
+  --custom-orders-page-submit-button-text: #fff;
 }

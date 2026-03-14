@@ -18,5 +18,15 @@
         "yourCart": "Your Cart",
         "emptyCart": "Your cart is empty.",
         "remove": "Remove"
+    },
+    "customOrdersPage": {
+        "title": "Custom Orders",
+        "name": "Name",
+        "namePlaceholder": "Your name",
+        "contactInformation": "Contact Information",
+        "contactInformationPlaceholder": "Email or phone number",
+        "orderDetails": "Order Details",
+        "orderDetailsPlaceholder": "Describe what you would like...",
+        "submitRequest": "Submit Request"
     }
 }
