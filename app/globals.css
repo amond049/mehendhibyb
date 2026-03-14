@@ -67,4 +67,15 @@ html, body {
 
   /* colours for the page.tsx file, this is the home page */
   --home-page-background: #e5e5e5;
+
+  /* colours for the store item page */
+  --store-item-page-background: #e5e5e5;
+  --store-item-background: #fff;
+  --store-item-price: #ca8a04;
+  --store-item-description: #374151;
+
+  /* colours for the store listing page */
+  --store-listing-page-background: #e5e5e5;
+  --store-listing-item-background: #fff;
+  --store-listing-item-price: #ca8a04;
 }

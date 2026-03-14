@@ -28,5 +28,11 @@
         "orderDetails": "Order Details",
         "orderDetailsPlaceholder": "Describe what you would like...",
         "submitRequest": "Submit Request"
+    },
+    "storeItemPage": {
+        "productNotFound": "Product not found"
+    },
+    "storeListingPage": {
+        "store": "Store"
     }
 }
