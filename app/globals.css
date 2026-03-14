@@ -41,14 +41,18 @@ html, body {
 }
 
 :root {
-  /* background colour for the booking page*/
+  /* colours for the booking page */
   --booking-page-background: #e5e5e5;
   --booking-page-form-bcakground: #fff;
+
+  /* colours for the cart page */
   --cart-page-background: ##e5e5e5;
   --cart-page-form-background: #fff;
   --cart-page-empty-cart-text: ##4b5563;
   --cart-page-item-price-text: #4b5563;
   --cart-page-remove-button-text: #ef4444;
+
+  /* colours for the custom orders page */
   --custom-orders-page-background: #e5e5e5;
   --custom-orders-page-form-background: #fff;
   --custom-orders-page-name-label-outline: #eab308;
@@ -57,4 +61,7 @@ html, body {
   --custom-orders-page-submit-button-background: #111827;
   --custom-orders-page-submit-button-hover: #000;
   --custom-orders-page-submit-button-text: #fff;
+
+  /* colours for the layout.tsx file, this controls the colours for everything */
+  --layout-background: #e5e5e5;
 }

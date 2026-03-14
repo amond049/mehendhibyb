@@ -11,7 +11,7 @@ export default function RootLayout({ children }: any) {
 
   return (
     <html>
-      <body className="bg-neutral-200 min-h-screen">
+      <body className="bg-[var(--layout-background)] min-h-screen">
         <CartProvider>
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
