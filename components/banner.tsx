@@ -10,12 +10,12 @@ export default function Banner() {
           flex
           items-center
           justify-center
-          bg-gradient-to-r from-[#2E3022] to-[#3A3D2A]
+          bg-gradient-to-r from-[var(--banner-background-starting-color)] to-[var(--banner-background-ending-color)]
         "
       >
         <h1
           className="
-            text-yellow-300
+            text-[var(--banner-text-color)]
             font-script
             text-4xl
             sm:text-6xl
@@ -23,7 +23,7 @@ export default function Banner() {
             lg:text-8xl
           "
         >
-          Logo
+          Logo. This will be replaced with an actual logo image in the future.
         </h1>
       </div>
     </div>

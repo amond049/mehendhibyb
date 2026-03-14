@@ -34,5 +34,37 @@
     },
     "storeListingPage": {
         "store": "Store"
+    },
+    "buttons": {
+        "addToCart": "Add to Cart"
+    },
+    "sections":{
+        "welcomeSection": {
+            "welcome": "Welcome",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vestibulum mauris sed lobortis varius."
+        },
+        "contactUs": {
+            "contactUs": "Contact Us",
+            "meta": "Meta",
+            "instagram": "Instagram",
+            "tiktok": "TikTok",
+            "youtube": "YouTube",
+            "x": "X"
+        },
+        "ourServices": {
+            "ourServices": "Our Services"
+        },
+        "sideBar": {
+            "home": "Home",
+            "booking": "Booking",
+            "customOrders": "Custom Orders",
+            "store": "Store",
+            "cart": "Cart"
+        },
+        "sideNav": {
+            "welcome": "Welcome",
+            "ourServices": "Our Services",
+            "contactUs": "Contact Us"
+        }
     }
 }

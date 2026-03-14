@@ -1,9 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 
 export default function SideNav() {
   const [activeSection, setActiveSection] = useState("welcome")
+  const { t } = useTranslation()
 
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]")
@@ -35,8 +37,8 @@ export default function SideNav() {
 
   const linkStyle = (id: string) =>
     activeSection === id
-      ? "text-yellow-700 font-semibold"
-      : "text-gray-700 hover:text-black"
+      ? "text-[var(--sidenav-active-section)] font-semibold"
+      : "text-[var(--sidenav-inactive-section)] hover:text-[var(--sidenav-inactive-section-hover)] transition-colors"
 
   return (
     <nav
@@ -45,24 +47,24 @@ export default function SideNav() {
       flex-col gap-3
       text-sm
       fixed right-10 top-40
-      bg-white/30
+      bg-[var(--sidenav-background-color)]
       backdrop-blur-md
-      border border-white/40
+      border border-[var(--sidenav-border)]
       rounded-xl
       p-4
       shadow-lg
     "
     >
       <a href="#welcome" className={linkStyle("welcome")}>
-        Welcome
+        {t("sections.sideNav.welcome")}
       </a>
 
       <a href="#services" className={linkStyle("services")}>
-        Our Services
+        {t("sections.sideNav.ourServices")}
       </a>
 
       <a href="#contact" className={linkStyle("contact")}>
-        Contact Us
+        {t("sections.sideNav.contactUs")}
       </a>
     </nav>
   )

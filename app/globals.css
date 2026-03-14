@@ -46,9 +46,9 @@ html, body {
   --booking-page-form-bcakground: #fff;
 
   /* colours for the cart page */
-  --cart-page-background: ##e5e5e5;
+  --cart-page-background: #e5e5e5;
   --cart-page-form-background: #fff;
-  --cart-page-empty-cart-text: ##4b5563;
+  --cart-page-empty-cart-text: #4b5563;
   --cart-page-item-price-text: #4b5563;
   --cart-page-remove-button-text: #ef4444;
 
@@ -78,4 +78,46 @@ html, body {
   --store-listing-page-background: #e5e5e5;
   --store-listing-item-background: #fff;
   --store-listing-item-price: #ca8a04;
+
+
+  /* colours for the components */
+  --add-to-cart-button-background: #111827;
+  --add-to-cart-button-text: #fff;
+  --add-to-cart-button-hover: #000;
+
+  --banner-background-starting-color: #2E3022;
+  --banner-background-ending-color: #3A3D2A;
+  --banner-text-color: #fde047;
+
+  --welcome-section-divider-border: #9ca3af;
+  --welcome-section-text-color: #6b7280;
+  --welcome-section-description-text-color: #1f2937;
+
+  --contact-us-section-divider-border: #9ca3af;
+  --contact-us-section-text-color: #6b7280;
+  --social-media-background: #fff;
+  --social-media-icon-color: #000;
+
+  --our-services-section-divider-border: #9ca3af;
+  --our-services-section-text-color: #6b7280;
+  --our-services-section-carousel-border: #eab308;
+  --our-services-arrow-color: #fff;
+  --our-services-dots-color: #fff;
+
+  --mobile-menu-button-background: #111827;
+  --mobile-menu-button-text-color: #fff;
+  --sidebar-backdrop-background: #000;
+  --sidebar-background: #fff;
+  --sidebar-text-color: #000;
+  --sidebar-item-active-text-color: #fff;
+  --sidebar-item-active-border: #eab308;
+  --sidebar-item-active-background: #111827;
+  --sidebar-icon-is-active: #fff;
+  --sidebar-icon-not-active: #000;
+
+  --sidenav-active-section: #a16207;
+  --sidenav-inactive-section: #000;
+  --sidenav-inactive-section-hover: #000;
+  --sidenav-background-color: #fff;
+  --sidenav-border: #fff
 }

@@ -2,8 +2,10 @@
 
 import { useEffect, useState, useRef } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 export default function ServicesSection() {
+  const { t } = useTranslation();
   const images = [
     "https://picsum.photos/800/400?1",
     "https://picsum.photos/800/400?2",
@@ -11,6 +13,14 @@ export default function ServicesSection() {
     "https://picsum.photos/800/400?4",
     "https://picsum.photos/800/400?5",
   ]
+
+  const [arrowColor, setArrowColor] = useState("#fff");
+
+  useEffect(() => {
+    const rootStyles = getComputedStyle(document.documentElement);
+    const color = rootStyles.getPropertyValue("--our-services-arrow-icon-color").trim();
+    if (color) setArrowColor(color);
+  }, []);
 
   const [index, setIndex] = useState(0)
   const touchStart = useRef<number | null>(null)
@@ -57,19 +67,19 @@ export default function ServicesSection() {
 
         {/* Divider */}
         <div className="flex items-center mb-8">
-          <div className="flex-grow border-t border-gray-400"></div>
-          <div className="mx-3 text-gray-500">✿</div>
-          <div className="flex-grow border-t border-gray-400"></div>
+          <div className="flex-grow border-t border-[var(--our-services-section-divider-border)]"></div>
+          <div className="mx-3 text-[var(--our-services-section-text-color)]">✿</div>
+          <div className="flex-grow border-t border-[var(--our-services-section-divider-border)]"></div>
         </div>
 
         {/* Title */}
         <h2 className="text-center text-3xl sm:text-4xl md:text-5xl italic font-semibold mb-6 sm:mb-10">
-          Our Services
+          {t('sections.ourServices.ourServices')}
         </h2>
 
         {/* Carousel */}
         <div
-          className="relative border-2 border-yellow-500 rounded-2xl overflow-hidden"
+          className="relative border-2 border-[var(--our-services-section-carousel-border)] rounded-2xl overflow-hidden"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
@@ -84,7 +94,7 @@ export default function ServicesSection() {
           {/* Left Arrow */}
           <button
             onClick={prev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur p-2 rounded-full hover:bg-white"
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-[var(--our-services-arrow-color)]/70 backdrop-blur p-2 rounded-full hover:bg-var(--our-services-arrow-color)"
           >
             <ChevronLeft size={28} />
           </button>
@@ -92,7 +102,7 @@ export default function ServicesSection() {
           {/* Right Arrow */}
           <button
             onClick={next}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur p-2 rounded-full hover:bg-white"
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-[var(--our-services-arrow-color)]/70 backdrop-blur p-2 rounded-full hover:bg-var(--our-services-arrow-color)"
           >
             <ChevronRight size={28} />
           </button>
@@ -104,7 +114,7 @@ export default function ServicesSection() {
                 key={i}
                 onClick={() => setIndex(i)}
                 className={`h-2 w-2 rounded-full transition-all ${
-                  i === index ? "bg-white w-6" : "bg-white/50"
+                  i === index ? "bg-[var(--our-services-dots-color)] w-6" : "bg-[var(--our-services-dots-color)]/50"
                 }`}
               />
             ))}
