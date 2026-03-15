@@ -37,7 +37,9 @@
         "contactInformationPlaceholder": "Email or phone number",
         "orderDetails": "Order Details",
         "orderDetailsPlaceholder": "Describe what you would like...",
-        "submitRequest": "Submit Request"
+        "submitRequest": "Submit Request",
+        "bookingSuccess": "Your custom order request has been sent successfully!",
+        "bookingError": "There was an error sending your custom order request. Please try again"
     },
     "storeItemPage": {
         "productNotFound": "Product not found"

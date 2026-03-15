@@ -37,14 +37,14 @@ export async function POST(req: Request) {
       to: process.env.EMAIL_USER,
       subject: "New Booking Request",
       text: `
-Name: ${name}
-Email: ${email}
-Service: ${service}
-Date: ${date}
-Number of people: ${people}
+        Name: ${name}
+        Email: ${email}
+        Service: ${service}
+        Date: ${date}
+        Number of people: ${people}
 
-Message:
-${message}
+        Message:
+        ${message}
       `,
       attachments,
     });
