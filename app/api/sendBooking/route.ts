@@ -1,38 +1,41 @@
-import { NextResponse } from "next/server";
-import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
   try {
     const { name, email, service, date, message } = await req.json();
 
-    console.log(process.env.CORP_EMAIL!,)
-    const { data, error } = await resend.emails.send({
-      from: "Bookings <onboarding@resend.dev>",
-      to: process.env.CORP_EMAIL!,
-      subject: `New Booking Request from ${name}`,
-      html: `
-        <h2>New Booking Request</h2>
-        <p><b>Name:</b> ${name}</p>
-        <p><b>Email:</b> ${email}</p>
-        <p><b>Service:</b> ${service}</p>
-        <p><b>Date:</b> ${date}</p>
-        <p><b>Message:</b> ${message}</p>
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER, // where booking requests go
+      subject: "New Booking Request",
+      text: `
+Name: ${name}
+Email: ${email}
+Service: ${service}
+Date: ${date}
+
+Message:
+${message}
       `,
     });
 
-    if (error) {
-      console.error("Resend error:", error);
-      return NextResponse.json({ error }, { status: 500 });
-    }
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
+  } catch (error) {
+    console.error("Email error:", error);
 
-    console.log("Email sent:", data);
-
-    return NextResponse.json({ success: true });
-
-  } catch (err) {
-    console.error("Server error:", err);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    return new Response(
+      JSON.stringify({ success: false, error: "Failed to send email" }),
+      { status: 500 }
+    );
   }
 }

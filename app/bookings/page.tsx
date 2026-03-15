@@ -21,28 +21,31 @@ export default function BookingPage() {
     });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      service: formData.get("service"),
+      date: formData.get("date"),
+      message: formData.get("message"),
+    };
 
     const res = await fetch("/api/sendBooking", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify(data),
     });
 
     if (res.ok) {
       alert("Booking request sent!");
-      setForm({
-        name: "",
-        email: "",
-        service: "",
-        date: "",
-        message: "",
-      });
     } else {
-      alert("Something went wrong.");
+      alert("Failed to send booking request.");
     }
   };
 
