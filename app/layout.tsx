@@ -11,6 +11,10 @@ export default function RootLayout({ children }: any) {
 
   return (
     <html>
+      <head>
+        <title>Mehendi by B</title>
+        <link rel="icon" type="image/png" href="/assets/favicon.png" />
+      </head>
       <body className="bg-[var(--layout-background)] min-h-screen">
         <CartProvider>
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
