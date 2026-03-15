@@ -1,18 +1,28 @@
 {
     "bookingPage": {
         "bookAnAppointment": "Book an Appointment",
+        "description": "In order to ensure we provide you with the best quality service, we will need you to provide some information to make the process simpler. If you have a deisgn in mind, please upload images in the file dropbox at the bottom of the form. If you are booking for multiple people, please specify this in the dropdown menu in the \"Number of People\" section. If you have any other information, please make sure to include that in the \"Messages\" section! Thank you!",
+        "instagramNotice": "If it's more convenient, you can also reach out via Instagram for booking information",
         "name": "Name",
         "namePlaceholder": "Your name",
         "email": "Email",
         "emailPlaceholder": "your@email.com",
-        "service": "Service",
+        "service": "Select your service...",
         "service1": "Service 1",
         "service2": "Service 2", 
         "service3": "Service 3",   
         "date": "Date",
+        "numberOfPeople": "Number of People",
         "message": "Message",
+        "uploadImages": "Upload Images",
+        "dragImagesActive": "Drop the images here...",
+        "dragImagesInactive": "Drag and drop images here, or click to select files",
         "messagePlaceholder": "Optional notes...",
-        "requestBooking": "Request Booking"
+        "requestBooking": "Request Booking",
+        "processingImages": "Processing images...",
+        "sendingEmail": "Sending email...",
+        "bookingSuccess": "Your booking request has been sent successfully!",
+        "bookingError": "There was an error sending your booking request. Please try again later"
     },
     "cartPage": {
         "yourCart": "Your Cart",
@@ -47,7 +57,7 @@
             "contactUs": "Contact Us",
             "meta": "Meta",
             "instagram": "Instagram",
-            "tiktok": "TikTok",
+            "tiktok": "Coming Soon",
             "youtube": "YouTube",
             "x": "X"
         },

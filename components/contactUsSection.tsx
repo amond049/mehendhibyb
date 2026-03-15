@@ -38,6 +38,7 @@ export default function ContactSection() {
         {/* Meta */}
         <a
           href="#"
+          target="_blank"
           className="flex items-center gap-3 bg-[var(--social-media-background)] px-6 py-4 rounded-xl shadow hover:shadow-lg transition"
         >
           <FaMeta size={24} color={socialMediaIconColor} />
@@ -46,7 +47,8 @@ export default function ContactSection() {
 
         {/* Instagram */}
         <a
-          href="#"
+          href="https://www.instagram.com/mehendhibyb/"
+          target="_blank"
           className="flex items-center gap-3 bg-[var(--social-media-background)] px-6 py-4 rounded-xl shadow hover:shadow-lg transition"
         >
           <FaInstagram size={24} color={socialMediaIconColor} />
@@ -55,29 +57,10 @@ export default function ContactSection() {
 
         {/* TikTok */}
         <a
-          href="#"
-          className="flex items-center gap-3 bg-[var(--social-media-background)] px-6 py-4 rounded-xl shadow hover:shadow-lg transition"
+          className="flex items-center gap-3 bg-[var(--social-media-background-disabled)] px-6 py-4 rounded-xl transition" 
         >
           <FaTiktok size={24} color={socialMediaIconColor}/>
           <span>{t("sections.contactUs.tiktok")}</span>
-        </a>
-
-        {/* YouTube */}
-        <a
-          href="#"
-          className="flex items-center gap-3 bg-[var(--social-media-background)] px-6 py-4 rounded-xl shadow hover:shadow-lg transition"
-        >
-          <FaYoutube size={24} color={socialMediaIconColor} />
-          <span>{t("sections.contactUs.youtube")}</span>
-        </a>
-
-        {/* X / Twitter */}
-        <a
-          href="#"
-          className="flex items-center gap-3 bg-[var(--social-media-background)] px-6 py-4 rounded-xl shadow hover:shadow-lg transition"
-        >
-          <FaXTwitter size={24} color={socialMediaIconColor} />
-          <span>{t("sections.contactUs.x")}</span>
         </a>
 
       </div>

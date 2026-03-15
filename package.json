@@ -9,12 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "formidable": "^3.5.4",
+    "heic2any": "^0.0.4",
     "i18next": "^25.8.18",
     "lucide-react": "^0.577.0",
     "next": "16.1.6",
     "nodemailer": "^8.0.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-dropzone": "^15.0.0",
     "react-i18next": "^16.5.8",
     "react-icons": "^5.6.0"
   },
