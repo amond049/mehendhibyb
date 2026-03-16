@@ -2,6 +2,7 @@
 
 import { useTranslation } from "react-i18next";
 import HennaDivider from "@/components/divider";
+import StainingResultsGallery from "@/components/stainingResults";
 
 export default function InformationPage() {
   const { t } = useTranslation();
@@ -160,6 +161,20 @@ export default function InformationPage() {
 
         </section>
 
+        <HennaDivider />
+
+        {/* Staining Results Section */}
+        <section className="space-y-12 bg-white/60 backdrop-blur-sm rounded-3xl p-10 shadow-sm">
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl font-semibold text-gray-800">
+              {t("informationPage.stainingResultsTitle")}
+            </h2>
+
+            <div className="w-16 h-[2px] mx-auto bg-gray-300 rounded-full"></div>
+          </div>
+
+          <StainingResultsGallery />
+        </section>
       </div>
     </main>
   );

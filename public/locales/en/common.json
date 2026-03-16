@@ -70,7 +70,11 @@
         "afterCareInstructions3": "Limit contact with water for the first 12 hours for the stain to develop",
         "afterCareInstructions4": "The stain will gradually get darker over the course of 24-48hrs.",
         "afterCareInstructions5": "Store cones in freezer/refrigerators for longer lasting paste ",
-        "afterCareInstructions6": "Enjoy!"
+        "afterCareInstructions6": "Enjoy!",
+        "stainingResultsTitle": "Staining Results",
+        "stainingResultsCaption1": "Stain <strong>right after</strong> removing the jagua and henna",
+        "stainingResultsCaption2": "Stain 8 hours after removing the jagua and henna",
+        "stainingResultsCaption3": "Stain 20 hours after removing the jagua and henna"
     },
     "portfolioPage": {
         "title": "My Portfolio"
