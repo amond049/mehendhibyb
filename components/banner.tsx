@@ -23,7 +23,7 @@ export default function Banner() {
             lg:text-8xl
           "
         >
-          Header will be here once it's been uploaded
+          Welcome!
         </h1>
       </div>
     </div>

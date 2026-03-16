@@ -47,6 +47,31 @@
     "storeListingPage": {
         "store": "Store"
     },
+    "informationPage": {
+        "title": "Want to Learn More?",
+        "subtitle": "Scroll through this page and hopefully it answers any questions you might have!",
+        "hennaTitle": "What is Henna?",
+        "hennaParagraph1": "Henna — or as it’s called in Hindi and Urdu — mehendhi, has been a staple of Pakistani, Indian, African and Middle Eastern culture for over 5000 years. Due to its natural cooling properties, initial use of Henna saw that it was crucial for people living in hot climates. It also had medicinal benefits, being used to treat stomach aches, burns, headaches and open wounds. ",
+        "hennaParagraph2": "Henna is a dye made from the dried, powdered leaves of Lawsonia inermis. The neat thing about Lawsonia intermix is that much like its namesake, it contains lawsone (hennotannic acid), a reddish-orange dye that binds to keratin present in the skin, was discovered and the decorative use for Henna saw its fruition. Natural additives like lemon, sugar and specific teas enriches the dye even further resulting in much deeper, darker stains.Today, henna is mainly used in celebration of special occasions, and unlike tattoos, henna is not permanent, often fading away over the span of a couple of days or a couple weeks depending on the quality of the henna as well as where on the body it was administered. Henna can also be used to dye hair, nails, and even fabrics like silk wool and leather!",
+        "jaguaTitle": "What is Jagua?",
+        "jaguaParagraph": "Jagua, also known as Genipa Americana, is a native tree that can be found in Columbia and other South American countries. Its dyeing properties was discovered over 2000 years ago by the Indigenous peoples of South America. Said to ward off evil spirits, provide camouflage for hunting, aid in ritual ceremonies and even have its own medicinal benefits, jagua was a crucial part of the Indigenous culture. It is often mistakenly referred to as “jagua henna”, but they are quite different. The most noticeable difference is that the jagua produces a blue-black stain on the skin, and producing much darker stains the longer you leave it. However, much like henna, the longer you leave the jagua on your skin, the darker the resulting stain is going to be. Jagua will typically remain on your skin for 1-3 weeks, again depending on how deep of a stain it is and where you have it on your body. ",
+        "ingredientsHeader": "We here at Mehendhi By B pride ourselves on our natural products, so for transparency and any allergen information, we have outlined all of the ingredients that we use in our products below. If you have any questions, please feel free to reach out to us via Instagram!",
+        "hennaIngredientsTitle": "Henna Ingredients",
+        "hennaIngredientsList" : "Water, Lawsonia inermis (henna powder), Lemon, Sugar, Essential oils (Eucalyptus and Tea Tree). ",
+        "jaguaIngredientsTitle": "Jagua Ingredients",
+        "jaguaIngredientsList": "Water, Genipa americana fruit powder (Jagua), Xanthan Gum, Essential Oils (Eucalyptus and Tea Tree). ",
+        "mixedConeIngredientsTitle": "Mixed Cone Ingredients",
+        "mixedConeIngredientsList": "Water, Lawsonia inermis (henna powder), Genipa americana fruit powder (Jagua), Lemon, Sugar, Xanthan Gum, Essential Oils (Eucalyptus and Tea Tree). ",
+        "bodyPaintIngredientsTitle": "Body Paint Ingredients",
+        "bodyPaintIngredientsList": "Bowitzki Body Paint, Water, Aveeno Moisturizer, (Some also include Uncanbe Body Glitter)",
+        "afterCareInstructionsTitle": "Aftercare Instructions",
+        "afterCareInstructions1": "Leave it on for 3 - 7 hours for a deep stain (longer the better)",
+        "afterCareInstructions2": "Avoid washing off with water, scrub off instead (can use oil based products) ",
+        "afterCareInstructions3": "Limit contact with water for the first 12 hours for the stain to develop",
+        "afterCareInstructions4": "The stain will gradually get darker over the course of 24-48hrs.",
+        "afterCareInstructions5": "Store cones in freezer/refrigerators for longer lasting paste ",
+        "afterCareInstructions6": "Enjoy!"
+    },
     "buttons": {
         "addToCart": "Add to Cart"
     },
@@ -71,7 +96,8 @@
             "booking": "Booking",
             "customOrders": "Custom Orders",
             "store": "Store",
-            "cart": "Cart"
+            "cart": "Cart",
+            "information": "More Information"
         },
         "sideNav": {
             "welcome": "Welcome",

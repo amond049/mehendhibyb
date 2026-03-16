@@ -79,6 +79,8 @@ html, body {
   --store-listing-item-background: #fff;
   --store-listing-item-price: #ca8a04;
 
+  /* colours for the information page */
+  --information-page-background: #e5e5e5;
 
   /* colours for the components */
   --add-to-cart-button-background: #111827;
