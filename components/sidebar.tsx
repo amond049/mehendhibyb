@@ -125,7 +125,7 @@ export default function Sidebar({ collapsed, setCollapsed }: any) {
 
                       {/* CART COUNT */}
                       {item.href === "/cart" && cart.length > 0 && (
-                        <span className="bg-yellow-500 text-black text-xs px-2 py-0.5 rounded-full">
+                        <span className="bg-[var(--sidebar-cart-badge-background)] text-[var(--sidebar-cart-badge-text-color)] text-xs px-2 py-0.5 rounded-full">
                           {cart.length}
                         </span>
                       )}

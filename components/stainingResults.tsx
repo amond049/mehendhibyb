@@ -21,8 +21,8 @@ export default function StainingResultsGallery() {
             alt={`Staining result ${idx + 1}`}
             className="rounded-xl w-full h-64 object-cover"
           />
-        <p
-        className="text-gray-700 text-center italic"
+      <p
+        className="text-[var(--staining-results-caption-text-color)] text-center italic"
         dangerouslySetInnerHTML={{ __html: t(`informationPage.stainingResultsCaption${idx + 1}`) }}
         />
         </div>

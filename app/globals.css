@@ -26,6 +26,36 @@ html, body {
   overflow-x: hidden;
 }
 
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+.animate-slide-out {
+  animation: slideOut 0.3s ease-in forwards;
+}
+
 @keyframes carousel-scroll {
   0% {
     transform: translateX(0);
@@ -42,8 +72,32 @@ html, body {
 
 :root {
   /* colours for the booking page */
-  --booking-page-background: #e5e5e5;
-  --booking-page-form-bcakground: #fff;
+    --booking-page-background: #f9fafb;
+  --booking-page-form-background: #ffffff;
+  --booking-page-title-color: #111827;
+  --booking-page-text-color: #111827;
+  --booking-page-label-color: #111827;
+  --booking-page-input-background: #ffffff;
+  --booking-page-input-text: #111827;
+  --booking-page-input-border: #d1d5db;
+  --booking-page-dropzone-border: #d1d5db;
+  --booking-page-dropzone-background: #ffffff;
+  --booking-page-dropzone-active-border: #3b82f6;
+  --booking-page-dropzone-active-background: #dbebff;
+  --booking-page-preview-border: #d1d5db;
+  --booking-page-remove-button-bg: #ef4444;
+  --booking-page-remove-button-text: #ffffff;
+  --booking-page-remove-button-hover: #dc2626;
+  --booking-page-submit-bg: #111827;
+  --booking-page-submit-text: #ffffff;
+  --booking-page-submit-hover: #000000;
+  --booking-page-submit-disabled: #6b7280;
+  --booking-page-modal-bg: #ffffff;
+  --booking-page-modal-text: #111827;
+  --booking-page-modal-overlay: rgba(0, 0, 0, 0.2);
+  --booking-page-notification-success: #10b981; /* green */
+  --booking-page-notification-error: #ef4444;   /* red */
+  --booking-page-notification-text: #ffffff; 
 
   /* colours for the cart page */
   --cart-page-background: #e5e5e5;
@@ -61,6 +115,34 @@ html, body {
   --custom-orders-page-submit-button-background: #111827;
   --custom-orders-page-submit-button-hover: #000;
   --custom-orders-page-submit-button-text: #fff;
+  --custom-orders-page-submit-button-disabled: #6b7280;
+  --custom-orders-page-submit-button-normal-state-text: #fff;
+  --custom-orders-page-submit-button-hover-background: #000;
+  --custom-orders-page-email-modal-background: #000;
+  --custom-orders-page-notification-text: #fff;
+  --custom-orders-page-notification-success: #10b981;
+  --custom-orders-page-notification-error: #ef4444;
+
+  /* colours for the information page */
+  --information-page-background: #fdfdfd; /* optional */
+  --information-page-subtitle-text: #4b5563; /* was text-gray-600 */
+  --information-page-body-text: #374151; /* was text-gray-700 */
+  --information-page-heading-text: #1f2937; /* was text-gray-800 */
+  --information-page-divider-bg: #d1d5db; /* was bg-gray-300 */
+  --information-page-icon-bg: #1f2937; /* was bg-gray-800 */
+  --information-page-icon-text: #ffffff; /* was text-white */
+  --information-page-section-bg: rgba(255,255,255,0.6); /* was bg-white/60 */
+  --information-page-card-bg: #ffffff; /* was bg-white */
+  --staining-results-caption-text-color: #374151;
+  
+  /* colours for the portfolio page */
+  --portfolio-page-background: #f9fafb;
+  --portfolio-page-title-text: #111827;
+  --portfolio-page-error-text: #b91c1c;
+  --portfolio-page-loading-text: #374151;
+  --portfolio-page-card-background: #ffffff;
+  --portfolio-page-card-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --portfolio-page-card-hover-shadow: 0 25px 50px rgba(0,0,0,0.25);
 
   /* colours for the layout.tsx file, this controls the colours for everything */
   --layout-background: #e5e5e5;
@@ -106,6 +188,8 @@ html, body {
   --our-services-section-carousel-border: #eab308;
   --our-services-arrow-color: #fff;
   --our-services-dots-color: #fff;
+  --our-services-section-description-text-color: #374151;
+  --our-services-portfolio-link-color: #3b82f6;
 
   --mobile-menu-button-background: #111827;
   --mobile-menu-button-text-color: #fff;
@@ -117,10 +201,14 @@ html, body {
   --sidebar-item-active-background: #111827;
   --sidebar-icon-is-active: #fff;
   --sidebar-icon-not-active: #000;
+  --sidebar-cart-badge-background: #eab308;
+  --sidebar-cart-badge-text-color: #000000;
 
   --sidenav-active-section: #a16207;
   --sidenav-inactive-section: #000;
   --sidenav-inactive-section-hover: #000;
   --sidenav-background-color: #fff;
-  --sidenav-border: #fff
+  --sidenav-border: #fff;
+
+  --henna-divider-color: #374151;
 }

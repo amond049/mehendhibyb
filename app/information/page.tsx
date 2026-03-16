@@ -20,7 +20,7 @@ export default function InformationPage() {
           </h1>
 
           <div className="max-w-2xl mx-auto">
-            <p className="text-lg text-gray-600 leading-relaxed">
+            <p className="text-lg text-[var(--information-page-subtitle-text)] leading-relaxed">
               {t("informationPage.subtitle")}
             </p>
           </div>
@@ -29,15 +29,15 @@ export default function InformationPage() {
         <HennaDivider />
 
         {/* History Section */}
-        <section className="grid md:grid-cols-2 gap-10 items-start bg-white/60 backdrop-blur-sm rounded-3xl p-10 shadow-sm">
+        <section className="grid md:grid-cols-2 gap-10 items-start bg-[var(--information-page-section-bg)] backdrop-blur-sm rounded-3xl p-10 shadow-sm">
 
           {/* Henna History */}
           <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">
+            <h2 className="text-2xl font-semibold text-[var(--information-page-heading-text)]">
               {t("informationPage.hennaTitle")}
             </h2>
 
-            <div className="space-y-4 text-gray-700 leading-relaxed">
+            <div className="space-y-4 text-[var(--information-page-body-text)] leading-relaxed">
               <p>{t("informationPage.hennaParagraph1")}</p>
               <p>{t("informationPage.hennaParagraph2")}</p>
             </div>
@@ -45,11 +45,11 @@ export default function InformationPage() {
 
           {/* Jagua History */}
           <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">
+            <h2 className="text-2xl font-semibold text-[var(--information-page-heading-text)]">
               {t("informationPage.jaguaTitle")}
             </h2>
 
-            <div className="text-gray-700 leading-relaxed">
+            <div className="text-[var(--information-page-body-text)] leading-relaxed">
               <p>{t("informationPage.jaguaParagraph")}</p>
             </div>
           </div>
@@ -59,74 +59,74 @@ export default function InformationPage() {
         <HennaDivider />
 
         {/* Ingredients Section */}
-        <section className="space-y-12 bg-white/60 backdrop-blur-sm rounded-3xl p-10 shadow-sm">
+        <section className="space-y-12 bg-[var(--information-page-section-bg)] backdrop-blur-sm rounded-3xl p-10 shadow-sm">
 
           <div className="text-center space-y-4">
-            <h2 className="text-3xl font-semibold text-gray-800">
+            <h2 className="text-3xl font-semibold text-[var(--information-page-heading-text)]">
               {t("informationPage.ingredientsHeader")}
             </h2>
 
-            <div className="w-16 h-[2px] mx-auto bg-gray-300 rounded-full"></div>
+            <div className="w-16 h-[2px] mx-auto bg-[var(--information-page-divider-bg)] rounded-full"></div>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
             {/* Henna Ingredients */}
-            <div className="bg-white shadow-md rounded-xl p-6 text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02]">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold">
+            <div className="bg-[var(--information-page-card-bg)] shadow-md rounded-xl p-6 text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02]">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[var(--information-page-icon-bg)] flex items-center justify-center text-[var(--information-page-icon-text)] font-bold">
                 H
               </div>
 
-              <h3 className="font-semibold text-lg mb-2 text-gray-800">
+              <h3 className="font-semibold text-lg mb-2 text-[var(--information-page-heading-text)]">
                 {t("informationPage.hennaIngredientsTitle")}
               </h3>
 
-              <p className="italic text-sm leading-relaxed text-gray-600">
+              <p className="italic text-sm leading-relaxed text-[var(--information-page-body-text)]">
                 {t("informationPage.hennaIngredientsList")}
               </p>
             </div>
 
             {/* Jagua Ingredients */}
-            <div className="bg-white shadow-md rounded-xl p-6 text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02]">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold">
+            <div className="bg-[var(--information-page-card-bg)] shadow-md rounded-xl p-6 text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02]">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[var(--information-page-icon-bg)] flex items-center justify-center text-[var(--information-page-icon-text)] font-bold">
                 J
               </div>
 
-              <h3 className="font-semibold text-lg mb-2 text-gray-800">
+              <h3 className="font-semibold text-lg mb-2 text-[var(--information-page-heading-text)]">
                 {t("informationPage.jaguaIngredientsTitle")}
               </h3>
 
-              <p className="italic text-sm leading-relaxed text-gray-600">
+              <p className="italic text-sm leading-relaxed text-[var(--information-page-body-text)]">
                 {t("informationPage.jaguaIngredientsList")}
               </p>
             </div>
 
             {/* Mixed Cone Ingredients */}
-            <div className="bg-white shadow-md rounded-xl p-6 text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02]">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold">
+            <div className="bg-[var(--information-page-card-bg)] shadow-md rounded-xl p-6 text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02]">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[var(--information-page-icon-bg)] flex items-center justify-center text-[var(--information-page-icon-text)] font-bold">
                 M
               </div>
 
-              <h3 className="font-semibold text-lg mb-2 text-gray-800">
+              <h3 className="font-semibold text-lg mb-2 text-[var(--information-page-heading-text)]">
                 {t("informationPage.mixedConeIngredientsTitle")}
               </h3>
 
-              <p className="italic text-sm leading-relaxed text-gray-600">
+              <p className="italic text-sm leading-relaxed text-[var(--information-page-body-text)]">
                 {t("informationPage.mixedConeIngredientsList")}
               </p>
             </div>
 
             {/* Body Paint Ingredients */}
-            <div className="bg-white shadow-md rounded-xl p-6 text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02]">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold">
+            <div className="bg-[var(--information-page-card-bg)] shadow-md rounded-xl p-6 text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02]">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[var(--information-page-icon-bg)] flex items-center justify-center text-[var(--information-page-icon-text)] font-bold">
                 B
               </div>
 
-              <h3 className="font-semibold text-lg mb-2 text-gray-800">
+              <h3 className="font-semibold text-lg mb-2 text-[var(--information-page-heading-text)]">
                 {t("informationPage.bodyPaintIngredientsTitle")}
               </h3>
 
-              <p className="italic text-sm leading-relaxed text-gray-600">
+              <p className="italic text-sm leading-relaxed text-[var(--information-page-body-text)]">
                 {t("informationPage.bodyPaintIngredientsList")}
               </p>
             </div>
@@ -137,25 +137,23 @@ export default function InformationPage() {
         <HennaDivider />
 
         {/* Aftercare Section */}
-        <section className="space-y-10 bg-white/60 backdrop-blur-sm rounded-3xl p-10 shadow-sm">
+        <section className="space-y-10 bg-[var(--information-page-section-bg)] backdrop-blur-sm rounded-3xl p-10 shadow-sm">
 
           <div className="text-center space-y-4">
-            <h2 className="text-3xl font-semibold">
+            <h2 className="text-3xl font-semibold text-[var(--information-page-heading-text)]">
               {t("informationPage.afterCareInstructionsTitle")}
             </h2>
 
-            <div className="w-16 h-[2px] mx-auto bg-gray-300 rounded-full"></div>
+            <div className="w-16 h-[2px] mx-auto bg-[var(--information-page-divider-bg)] rounded-full"></div>
           </div>
 
-          <div className="bg-white shadow-lg rounded-2xl p-8">
-            <ul className="list-disc pl-6 space-y-4 text-left marker:text-[var(--accent-color)] leading-relaxed text-gray-700">
-
+          <div className="bg-[var(--information-page-card-bg)] shadow-lg rounded-2xl p-8">
+            <ul className="list-disc pl-6 space-y-4 text-left marker:text-[var(--accent-color)] leading-relaxed text-[var(--information-page-body-text)]">
               <li>{t("informationPage.afterCareInstructions1")}</li>
               <li>{t("informationPage.afterCareInstructions2")}</li>
               <li>{t("informationPage.afterCareInstructions3")}</li>
               <li>{t("informationPage.afterCareInstructions4")}</li>
               <li>{t("informationPage.afterCareInstructions5")}</li>
-
             </ul>
           </div>
 
@@ -164,13 +162,13 @@ export default function InformationPage() {
         <HennaDivider />
 
         {/* Staining Results Section */}
-        <section className="space-y-12 bg-white/60 backdrop-blur-sm rounded-3xl p-10 shadow-sm">
+        <section className="space-y-12 bg-[var(--information-page-section-bg)] backdrop-blur-sm rounded-3xl p-10 shadow-sm">
           <div className="text-center space-y-4">
-            <h2 className="text-3xl font-semibold text-gray-800">
+            <h2 className="text-3xl font-semibold text-[var(--information-page-heading-text)]">
               {t("informationPage.stainingResultsTitle")}
             </h2>
 
-            <div className="w-16 h-[2px] mx-auto bg-gray-300 rounded-full"></div>
+            <div className="w-16 h-[2px] mx-auto bg-[var(--information-page-divider-bg)] rounded-full"></div>
           </div>
 
           <StainingResultsGallery />

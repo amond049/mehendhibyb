@@ -22,8 +22,8 @@ export default function ProductPage({ params }: ProductPageProps) {
   const { name, price, image, description } = product;
 
   return (
-    <main className="min-h-screen bg-[vars(--store-item-page-background)] flex justify-center px-6 py-20">
-      <div className="max-w-4xl w-full bg-[vars(--store-item-background)] rounded-2xl shadow-lg p-10 grid md:grid-cols-2 gap-10">
+    <main className="min-h-screen bg-[var(--store-item-page-background)] flex justify-center px-6 py-20">
+      <div className="max-w-4xl w-full bg-[var(--store-item-background)] rounded-2xl shadow-lg p-10 grid md:grid-cols-2 gap-10">
         <img
           src={image}
           alt={name}

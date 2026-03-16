@@ -1,8 +1,8 @@
 "use client"
 
 import { useTranslation } from "react-i18next"
-import { FaXTwitter, FaMeta } from "react-icons/fa6";
-import { FaTiktok, FaYoutube, FaInstagram } from "react-icons/fa";
+import { FaMeta } from "react-icons/fa6";
+import { FaTiktok, FaInstagram } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 export default function ContactSection() {

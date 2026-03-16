@@ -15,7 +15,7 @@ export default function StorePage() {
             <Link
               key={product.slug}
               href={`/store/${product.slug}`}
-              className="bg-[vars(--store-listing-item-background)] rounded-2xl shadow hover:shadow-lg transition overflow-hidden"
+              className="bg-[var(--store-listing-item-background)] rounded-2xl shadow hover:shadow-lg transition overflow-hidden"
             >
               <img
                 src={product.image}

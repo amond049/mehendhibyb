@@ -124,52 +124,60 @@ export default function BookingPage() {
   return (
     <main className="min-h-screen bg-[var(--booking-page-background)] flex justify-center px-6 py-20 relative">
       <div className="max-w-3xl w-full bg-[var(--booking-page-form-background)] rounded-2xl shadow-lg p-10 relative">
-        <h1 className="font-bold text-4xl italic text-center mb-10">{t("bookingPage.bookAnAppointment")}</h1>
+        <h1 className="font-bold text-4xl italic text-center mb-10 text-[var(--booking-page-title-color)]">
+          {t("bookingPage.bookAnAppointment")}
+        </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <p className="black mb-1">
+            <p className="mb-1 text-[var(--booking-page-text-color)]">
               {t("bookingPage.description")}
             </p>
-            <p className="black mb-2 font-bold">
+            <p className="mb-2 font-bold text-[var(--booking-page-text-color)]">
               {t("bookingPage.instagramNotice")}
             </p>
           </div>
 
           {/* Name */}
           <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.name")}</label>
+            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
+              {t("bookingPage.name")}
+            </label>
             <input
               name="name"
               type="text"
               value={form.name}
               onChange={handleChange}
               placeholder={t("bookingPage.namePlaceholder")}
-              className="w-full border rounded-lg px-4 py-2"
+              className="w-full border rounded-lg px-4 py-2 border-[var(--booking-page-input-border)] bg-[var(--booking-page-input-background)] text-[var(--booking-page-input-text)]"
             />
           </div>
 
           {/* Email */}
           <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.email")}</label>
+            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
+              {t("bookingPage.email")}
+            </label>
             <input
               name="email"
               type="email"
               value={form.email}
               onChange={handleChange}
               placeholder={t("bookingPage.emailPlaceholder")}
-              className="w-full border rounded-lg px-4 py-2"
+              className="w-full border rounded-lg px-4 py-2 border-[var(--booking-page-input-border)] bg-[var(--booking-page-input-background)] text-[var(--booking-page-input-text)]"
             />
           </div>
 
           {/* Service */}
           <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.service")}</label>
+            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
+              {t("bookingPage.service")}
+            </label>
             <select
               name="service"
               value={form.service}
               onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2"
+              className="w-full border rounded-lg px-4 py-2 border-[var(--booking-page-input-border)] bg-[var(--booking-page-input-background)] text-[var(--booking-page-input-text)]"
             >
               <option value="">{t("bookingPage.service")}</option>
               <option value="service1">{t("bookingPage.service1")}</option>
@@ -180,54 +188,63 @@ export default function BookingPage() {
 
           {/* Date */}
           <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.date")}</label>
+            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
+              {t("bookingPage.date")}
+            </label>
             <input
               name="date"
               type="date"
               value={form.date}
               onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2"
+              className="w-full border rounded-lg px-4 py-2 border-[var(--booking-page-input-border)] bg-[var(--booking-page-input-background)] text-[var(--booking-page-input-text)]"
             />
           </div>
 
           {/* Number of People */}
           <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.numberOfPeople")}</label>
+            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
+              {t("bookingPage.numberOfPeople")}
+            </label>
             <input
               name="people"
               type="number"
               min={1}
               value={form.people}
               onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2"
+              className="w-full border rounded-lg px-4 py-2 border-[var(--booking-page-input-border)] bg-[var(--booking-page-input-background)] text-[var(--booking-page-input-text)]"
             />
           </div>
 
           {/* Message */}
           <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.message")}</label>
+            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
+              {t("bookingPage.message")}
+            </label>
             <textarea
               name="message"
               value={form.message}
               onChange={handleChange}
               placeholder={t("bookingPage.messagePlaceholder")}
-              className="w-full border rounded-lg px-4 py-2 h-28"
+              className="w-full border rounded-lg px-4 py-2 h-28 border-[var(--booking-page-input-border)] bg-[var(--booking-page-input-background)] text-[var(--booking-page-input-text)]"
             />
           </div>
 
           {/* Multi-image Dropzone */}
           <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.uploadImages")}</label>
+            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
+              {t("bookingPage.uploadImages")}
+            </label>
             <div
               {...getRootProps()}
               className={`border-dashed border-2 rounded-lg p-6 text-center cursor-pointer transition
-                ${isDragActive ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}`}
+                ${isDragActive ? "border-[var(--booking-page-dropzone-active-border)] bg-[var(--booking-page-dropzone-active-background)]"
+                               : "border-[var(--booking-page-dropzone-border)] bg-[var(--booking-page-dropzone-background)]"}`}
             >
               <input {...getInputProps()} />
               {isDragActive ? (
-                <p>{t("bookingPage.dragImagesActive")}</p>
+                <p className="text-[var(--booking-page-text-color)]">{t("bookingPage.dragImagesActive")}</p>
               ) : (
-                <p>{t("bookingPage.dragImagesInactive")}</p>
+                <p className="text-[var(--booking-page-text-color)]">{t("bookingPage.dragImagesInactive")}</p>
               )}
             </div>
 
@@ -239,12 +256,12 @@ export default function BookingPage() {
                     <img
                       src={previews[index]}
                       alt={`preview-${index}`}
-                      className="w-20 h-20 object-cover rounded-lg border"
+                      className="w-20 h-20 object-cover rounded-lg border-[var(--booking-page-preview-border)]"
                     />
                     <button
                       type="button"
                       onClick={() => removeImage(index)}
-                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                      className="absolute top-0 right-0 rounded-full w-5 h-5 flex items-center justify-center text-xs bg-[var(--booking-page-remove-button-bg)] text-[var(--booking-page-remove-button-text)] hover:bg-[var(--booking-page-remove-button-hover)]"
                     >
                       ×
                     </button>
@@ -258,37 +275,44 @@ export default function BookingPage() {
           <button
             type="submit"
             disabled={isSending}
-            className={`w-full py-3 rounded-lg transition ${isSending ? "bg-gray-500 cursor-not-allowed" : "bg-gray-900 text-white hover:bg-black"}`}
+            className={`w-full py-3 rounded-lg transition bg-[var(--booking-page-submit-bg)] text-[var(--booking-page-submit-text)] hover:bg-[var(--booking-page-submit-hover)] disabled:bg-[var(--booking-page-submit-disabled)] disabled:cursor-not-allowed`}
           >
             {t("bookingPage.requestBooking")}
           </button>
         </form>
 
-        {/* Small non-intrusive uploading modal */}
+        {/* Uploading Modal */}
         {isUploading && (
           <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-            <div className="bg-white p-6 rounded-lg shadow-lg border pointer-events-auto">
-              <p className="text-lg font-medium">{t("bookingPage.processingImages")}</p>
+            <div className="bg-[var(--booking-page-modal-bg)] p-6 rounded-lg shadow-lg border pointer-events-auto">
+              <p className="text-lg font-medium text-[var(--booking-page-modal-text)]">
+                {t("bookingPage.processingImages")}
+              </p>
             </div>
-            <div className="fixed inset-0 bg-black opacity-20"></div>
+            <div className="fixed inset-0 bg-[var(--booking-page-modal-overlay)]"></div>
           </div>
         )}
 
-        {/* Sending email modal */}
+        {/* Sending Modal */}
         {isSending && (
           <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-            <div className="bg-white p-6 rounded-lg shadow-lg border pointer-events-auto">
-              <p className="text-lg font-medium">{t("bookingPage.sendingEmail")}</p>
+            <div className="bg-[var(--booking-page-modal-bg)] p-6 rounded-lg shadow-lg border pointer-events-auto">
+              <p className="text-lg font-medium text-[var(--booking-page-modal-text)]">
+                {t("bookingPage.sendingEmail")}
+              </p>
             </div>
-            <div className="fixed inset-0 bg-black opacity-20"></div>
+            <div className="fixed inset-0 bg-[var(--booking-page-modal-overlay)]"></div>
           </div>
         )}
 
         {/* Notification */}
         {notification && (
           <div
-            className={`fixed top-4 right-4 z-50 px-4 py-3 rounded shadow-lg text-white transition
-              ${notification.type === "success" ? "bg-green-500" : "bg-red-500"}`}
+            className={`fixed top-4 right-4 z-50 px-4 py-3 rounded shadow-lg text-[var(--booking-page-notification-text)] transition-all duration-300 transform ${
+              notification.type === "success"
+                ? "bg-[var(--booking-page-notification-success)]"
+                : "bg-[var(--booking-page-notification-error)]"
+            } animate-slide-in`}
           >
             {notification.message}
           </div>

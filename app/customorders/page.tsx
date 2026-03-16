@@ -126,7 +126,7 @@ export default function CustomOrdersPage() {
           <button
             type="submit"
             disabled={isSending}
-            className={`w-full py-3 rounded-lg transition ${isSending ? "bg-gray-500 cursor-not-allowed" : "bg-gray-900 text-white hover:bg-black"}`}
+            className={`w-full py-3 rounded-lg transition ${isSending ? "bg-[var(--custom-orders-page-submit-button-disabled)] cursor-not-allowed" : "bg-[var(--custom-orders-page-submit-button-background)] text-[var(--custom-orders-page-submit-button-normal-state-text)] hover:bg-[var(--custom-orders-page-submit-button-hover-background)]"}`}
           >
             {t("bookingPage.requestBooking")}
           </button>
@@ -138,15 +138,15 @@ export default function CustomOrdersPage() {
             <div className="bg-white p-6 rounded-lg shadow-lg border pointer-events-auto">
               <p className="text-lg font-medium">{t("bookingPage.sendingEmail")}</p>
             </div>
-            <div className="fixed inset-0 bg-black opacity-20"></div>
+            <div className="fixed inset-0 bg-[var(--custom-orders-page-email-modal-background)] opacity-20"></div>
           </div>
         )}
 
         {/* Notification */}
         {notification && (
           <div
-            className={`fixed top-4 right-4 z-50 px-4 py-3 rounded shadow-lg text-white transition
-              ${notification.type === "success" ? "bg-green-500" : "bg-red-500"}`}
+            className={`fixed top-4 right-4 z-50 px-4 py-3 rounded shadow-lg text-[var(--custom-orders-page-notification-text)] transition
+              ${notification.type === "success" ? "bg-[var(--custom-orders-page-notification-success)]" : "bg-[var(--custom-orders-page-notification-error)]"}`}
           >
             {notification.message}
           </div>

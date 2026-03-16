@@ -12,53 +12,70 @@ export default function ServicesSection() {
   const { data: allImages, error } = useSWR("/api/grabRoulette", fetcher)
   const [images, setImages] = useState<string[]>([])
 
-  // Pick 5 random images and add cache-busting
   useEffect(() => {
     if (allImages?.length) {
       const shuffled = [...allImages].sort(() => 0.5 - Math.random())
       const selected = shuffled.slice(0, 5).map((url: string) => {
-        return `${url}&cb=${Date.now()}` // append timestamp to prevent caching
+        return `${url}&cb=${Date.now()}`
       })
       setImages(selected)
     }
   }, [allImages])
 
   const [arrowColor, setArrowColor] = useState("#fff")
+
   useEffect(() => {
     const rootStyles = getComputedStyle(document.documentElement)
-    const color = rootStyles.getPropertyValue("--our-services-arrow-icon-color").trim()
+    const color = rootStyles
+      .getPropertyValue("--our-services-arrow-icon-color")
+      .trim()
+
     if (color) setArrowColor(color)
   }, [])
 
   const [index, setIndex] = useState(0)
+
   const touchStart = useRef<number | null>(null)
   const touchEnd = useRef<number | null>(null)
 
   const next = () => setIndex((prev) => (prev + 1) % images.length)
   const prev = () => setIndex((prev) => (prev - 1 + images.length) % images.length)
 
-  // Auto scroll
   useEffect(() => {
     const interval = setInterval(next, 4000)
     return () => clearInterval(interval)
   }, [images])
 
-  // Swipe detection
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStart.current = e.targetTouches[0].clientX
   }
+
   const handleTouchMove = (e: React.TouchEvent) => {
     touchEnd.current = e.targetTouches[0].clientX
   }
+
   const handleTouchEnd = () => {
     if (touchStart.current === null || touchEnd.current === null) return
+
     const distance = touchStart.current - touchEnd.current
+
     if (distance > 50) next()
     if (distance < -50) prev()
   }
 
-  if (error) return <div className="text-center mt-10">Failed to load carousel images</div>
-  if (!images.length) return <div className="text-center mt-10">Loading...</div>
+  if (error)
+    return (
+      <div className="text-center mt-10">
+        Failed to load carousel images
+      </div>
+    )
+
+  if (!images.length)
+    return (
+      <div className="text-center mt-10">
+        Loading...
+      </div>
+    )
 
   return (
     <section
@@ -66,6 +83,7 @@ export default function ServicesSection() {
       className="scroll-mt-32 w-full flex justify-center px-4 py-16"
     >
       <div className="max-w-5xl w-full">
+
         {/* Divider */}
         <div className="flex items-center mb-8">
           <div className="flex-grow border-t border-[var(--our-services-section-divider-border)]"></div>
@@ -75,26 +93,41 @@ export default function ServicesSection() {
 
         {/* Title */}
         <h2 className="text-center text-3xl sm:text-4xl md:text-5xl italic font-semibold mb-6 sm:mb-10">
-          {t('sections.ourServices.ourServices')}
+          {t("sections.ourServices.ourServices")}
         </h2>
+
         <div className="max-w-2xl mx-auto text-center mt-8">
-          <p className="mb-4 text-lg text-gray-700">
+
+          <p className="mb-4 text-lg text-[var(--our-services-section-description-text-color)]">
             We perform the following services:
           </p>
 
-          <ul className="list-disc list-inside space-y-2 text-gray-700 text-left sm:text-center sm:list-none sm:flex sm:justify-center sm:gap-6">
+          <ul className="list-disc list-inside space-y-2 text-[var(--our-services-section-description-text-color)] text-left sm:text-center sm:list-none sm:flex sm:justify-center sm:gap-6">
             <li className="font-bold">Henna</li>
             <li className="font-bold">Jagua</li>
             <li className="font-bold">Body Paint</li>
             <li className="font-bold">Temporary Tattoos</li>
           </ul>
 
-          <p className="mt-4 text-lg text-gray-700">
+          <p className="mt-4 text-lg text-[var(--our-services-section-description-text-color)]">
             And more to come, stay tuned!
           </p>
-          <p className="mt-4 text-lg text-gray-700">You can see some of my work below, if you want to see more, check out my <a href="/portfolio" className="text-blue-500 hover:underline">portfolio</a>!</p>
+
+          <p className="mt-4 text-lg text-[var(--our-services-section-description-text-color)]">
+            You can see some of my work below, if you want to see more, check out my{" "}
+            <a
+              href="/portfolio"
+              className="text-[var(--our-services-portfolio-link-color)] hover:underline"
+            >
+              portfolio
+            </a>
+            !
+          </p>
+
         </div>
-        <br></br>
+
+        <br />
+
         {/* Carousel */}
         <div
           className="relative border-2 border-[var(--our-services-section-carousel-border)] rounded-2xl overflow-hidden"
@@ -103,7 +136,6 @@ export default function ServicesSection() {
           onTouchEnd={handleTouchEnd}
         >
 
-          {/* Image */}
           <img
             src={images[index]}
             className="w-full h-[220px] sm:h-[300px] md:h-[400px] object-cover transition-all duration-500"
@@ -140,6 +172,7 @@ export default function ServicesSection() {
               />
             ))}
           </div>
+
         </div>
       </div>
     </section>
