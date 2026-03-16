@@ -72,6 +72,9 @@
         "afterCareInstructions5": "Store cones in freezer/refrigerators for longer lasting paste ",
         "afterCareInstructions6": "Enjoy!"
     },
+    "portfolioPage": {
+        "title": "My Portfolio"
+    },
     "buttons": {
         "addToCart": "Add to Cart"
     },
@@ -97,7 +100,8 @@
             "customOrders": "Custom Orders",
             "store": "Store",
             "cart": "Cart",
-            "information": "More Information"
+            "information": "More Information",
+            "portfolio": "Portfolio"
         },
         "sideNav": {
             "welcome": "Welcome",

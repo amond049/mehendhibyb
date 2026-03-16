@@ -11,7 +11,7 @@ import {
   ShoppingBag,
   ShoppingCart,
   Info,
-  InfoIcon
+  Book
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -29,7 +29,8 @@ export default function Sidebar({ collapsed, setCollapsed }: any) {
     { name: t("sections.sideBar.store"), icon: Store, href: "/store" },
     { name: t("sections.sideBar.customOrders"), icon: ShoppingBag, href: "/customorders" },
     { name: t("sections.sideBar.cart"), icon: ShoppingCart, href: "/cart" },
-    { name: t("sections.sideBar.information"), icon: InfoIcon, href: "/information" },
+    { name: t("sections.sideBar.information"), icon: Info, href: "/information" },
+    { name: t("sections.sideBar.portfolio"), icon: Book, href: "/portfolio" },
   ];
 
   return (
