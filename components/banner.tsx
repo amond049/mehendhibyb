@@ -23,7 +23,7 @@ export default function Banner() {
             lg:text-8xl
           "
         >
-          Logo. This will be replaced with an actual logo image in the future.
+          Header will be here once it's been uploaded
         </h1>
       </div>
     </div>
