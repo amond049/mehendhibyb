@@ -9,9 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1010.0",
     "@aws-sdk/client-s3": "^3.1009.0",
     "@aws-sdk/credential-providers": "^3.1009.0",
+    "@aws-sdk/lib-dynamodb": "^3.1010.0",
     "@aws-sdk/s3-request-presigner": "^3.1009.0",
+    "@stripe/stripe-js": "^8.10.0",
     "formidable": "^3.5.4",
     "heic2any": "^0.0.4",
     "i18next": "^25.8.18",
@@ -23,6 +26,7 @@
     "react-dropzone": "^15.0.0",
     "react-i18next": "^16.5.8",
     "react-icons": "^5.6.0",
+    "stripe": "^20.4.1",
     "swr": "^2.4.1"
   },
   "devDependencies": {
