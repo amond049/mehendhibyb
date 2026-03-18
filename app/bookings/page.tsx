@@ -16,31 +16,56 @@ export default function BookingPage() {
     people: 1,
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
   const [files, setFiles] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [isSending, setIsSending] = useState(false);
+
   const [notification, setNotification] = useState<{
     type: "success" | "error";
     message: string;
   } | null>(null);
 
+  // ✅ VALIDATION
+  const validate = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!form.name) newErrors.name = "This field is required";
+    if (!form.email) newErrors.email = "This field is required";
+    if (!form.service) newErrors.service = "This field is required";
+    if (!form.date) newErrors.date = "This field is required";
+    if (!form.people || form.people < 1) newErrors.people = "Must be at least 1";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+
     setForm((prev) => ({
       ...prev,
       [name]: name === "people" ? Number(value) : value,
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
     }));
   };
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const heic2any = (await import("heic2any")).default;
     setIsUploading(true);
+
     const newFiles: File[] = [];
 
     for (const file of acceptedFiles) {
       let finalFile = file;
+
       if (file.type === "image/heic" || file.name.toLowerCase().endsWith(".heic")) {
         try {
           const blob = await heic2any({ blob: file, toType: "image/jpeg" });
@@ -54,6 +79,7 @@ export default function BookingPage() {
           continue;
         }
       }
+
       newFiles.push(finalFile);
     }
 
@@ -61,7 +87,7 @@ export default function BookingPage() {
     setIsUploading(false);
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
       "image/jpeg": [],
@@ -73,19 +99,16 @@ export default function BookingPage() {
     multiple: true,
   });
 
-  const removeImage = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
-  };
-
   const previews = useMemo(() => files.map((file) => URL.createObjectURL(file)), [files]);
 
   useEffect(() => {
     return () => previews.forEach((url) => URL.revokeObjectURL(url));
   }, [previews]);
 
+  // ✅ Toast auto-dismiss
   useEffect(() => {
     if (notification) {
-      const timer = setTimeout(() => setNotification(null), 4000); // hide after 4s
+      const timer = setTimeout(() => setNotification(null), 3500);
       return () => clearTimeout(timer);
     }
   }, [notification]);
@@ -93,7 +116,10 @@ export default function BookingPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!validate()) return;
+
     setIsSending(true);
+
     const formData = new FormData();
     formData.append("name", form.name);
     formData.append("email", form.email);
@@ -106,16 +132,24 @@ export default function BookingPage() {
 
     try {
       const res = await fetch("/api/sendBooking", { method: "POST", body: formData });
+
       if (res.ok) {
-        setForm({ name: "", email: "", service: "", date: "", message: "", people: 1 });
+        setForm({
+          name: "",
+          email: "",
+          service: "",
+          date: "",
+          message: "",
+          people: 1,
+        });
         setFiles([]);
-        setNotification({ type: "success", message: t("bookingPage.bookingSuccess") });
+        setNotification({ type: "success", message: "Booking request sent!" });
       } else {
-        setNotification({ type: "error", message: t("bookingPage.bookingError") });
+        setNotification({ type: "error", message: "Something went wrong." });
       }
     } catch (err) {
       console.error(err);
-      setNotification({ type: "error", message: t("bookingPage.bookingError") });
+      setNotification({ type: "error", message: "Something went wrong." });
     } finally {
       setIsSending(false);
     }
@@ -123,200 +157,118 @@ export default function BookingPage() {
 
   return (
     <main className="min-h-screen bg-[var(--booking-page-background)] flex justify-center px-6 py-20 relative">
+      
+      {/* ✅ Toast Notification */}
+      {notification && (
+        <div
+          className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3 rounded-xl shadow-lg
+            transform transition-all duration-300
+            ${
+              notification.type === "success"
+                ? "bg-green-500 text-white"
+                : "bg-red-500 text-white"
+            }`}
+        >
+          <span className="text-lg">
+            {notification.type === "success" ? "✔" : "⚠"}
+          </span>
+
+          <p className="text-sm font-medium">{notification.message}</p>
+
+          <button
+            onClick={() => setNotification(null)}
+            className="ml-2 text-white/80 hover:text-white"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       <div className="max-w-3xl w-full bg-[var(--booking-page-form-background)] rounded-2xl shadow-lg p-10 relative">
         <h1 className="font-bold text-4xl italic text-center mb-10 text-[var(--booking-page-title-color)]">
           {t("bookingPage.bookAnAppointment")}
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <p className="mb-1 text-[var(--booking-page-text-color)]">
-              {t("bookingPage.description")}
-            </p>
-            <p className="mb-2 font-bold text-[var(--booking-page-text-color)]">
-              {t("bookingPage.instagramNotice")}
-            </p>
+
+          <input
+            name="name"
+            placeholder="Name"
+            value={form.name}
+            onChange={handleChange}
+            className={`w-full border rounded-lg px-4 py-2 ${errors.name && "border-red-500"}`}
+          />
+          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            className={`w-full border rounded-lg px-4 py-2 ${errors.email && "border-red-500"}`}
+          />
+          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+
+          <select
+            name="service"
+            value={form.service}
+            onChange={handleChange}
+            className={`w-full border rounded-lg px-4 py-2 ${errors.service && "border-red-500"}`}
+          >
+            <option value="">Select a service</option>
+            <option value="service1">Service 1</option>
+            <option value="service2">Service 2</option>
+            <option value="service3">Service 3</option>
+          </select>
+          {errors.service && <p className="text-red-500 text-sm">{errors.service}</p>}
+
+          <input
+            name="date"
+            type="date"
+            value={form.date}
+            onChange={handleChange}
+            className={`w-full border rounded-lg px-4 py-2 ${errors.date && "border-red-500"}`}
+          />
+          {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
+
+          <input
+            name="people"
+            type="number"
+            min={1}
+            value={form.people}
+            onChange={handleChange}
+            className={`w-full border rounded-lg px-4 py-2 ${errors.people && "border-red-500"}`}
+          />
+          {errors.people && <p className="text-red-500 text-sm">{errors.people}</p>}
+
+          <textarea
+            name="message"
+            placeholder="Message (optional)"
+            value={form.message}
+            onChange={handleChange}
+            className="w-full border rounded-lg px-4 py-2 h-28"
+          />
+
+          <div {...getRootProps()} className="border-dashed border-2 p-6 text-center cursor-pointer rounded-lg">
+            <input {...getInputProps()} />
+            <p>Drag & drop images here, or click to upload</p>
           </div>
 
-          {/* Name */}
-          <div>
-            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
-              {t("bookingPage.name")}
-            </label>
-            <input
-              name="name"
-              type="text"
-              value={form.name}
-              onChange={handleChange}
-              placeholder={t("bookingPage.namePlaceholder")}
-              className="w-full border rounded-lg px-4 py-2 border-[var(--booking-page-input-border)] bg-[var(--booking-page-input-background)] text-[var(--booking-page-input-text)]"
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
-              {t("bookingPage.email")}
-            </label>
-            <input
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder={t("bookingPage.emailPlaceholder")}
-              className="w-full border rounded-lg px-4 py-2 border-[var(--booking-page-input-border)] bg-[var(--booking-page-input-background)] text-[var(--booking-page-input-text)]"
-            />
-          </div>
-
-          {/* Service */}
-          <div>
-            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
-              {t("bookingPage.service")}
-            </label>
-            <select
-              name="service"
-              value={form.service}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2 border-[var(--booking-page-input-border)] bg-[var(--booking-page-input-background)] text-[var(--booking-page-input-text)]"
-            >
-              <option value="">{t("bookingPage.service")}</option>
-              <option value="service1">{t("bookingPage.service1")}</option>
-              <option value="service2">{t("bookingPage.service2")}</option>
-              <option value="service3">{t("bookingPage.service3")}</option>
-            </select>
-          </div>
-
-          {/* Date */}
-          <div>
-            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
-              {t("bookingPage.date")}
-            </label>
-            <input
-              name="date"
-              type="date"
-              value={form.date}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2 border-[var(--booking-page-input-border)] bg-[var(--booking-page-input-background)] text-[var(--booking-page-input-text)]"
-            />
-          </div>
-
-          {/* Number of People */}
-          <div>
-            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
-              {t("bookingPage.numberOfPeople")}
-            </label>
-            <input
-              name="people"
-              type="number"
-              min={1}
-              value={form.people}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2 border-[var(--booking-page-input-border)] bg-[var(--booking-page-input-background)] text-[var(--booking-page-input-text)]"
-            />
-          </div>
-
-          {/* Message */}
-          <div>
-            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
-              {t("bookingPage.message")}
-            </label>
-            <textarea
-              name="message"
-              value={form.message}
-              onChange={handleChange}
-              placeholder={t("bookingPage.messagePlaceholder")}
-              className="w-full border rounded-lg px-4 py-2 h-28 border-[var(--booking-page-input-border)] bg-[var(--booking-page-input-background)] text-[var(--booking-page-input-text)]"
-            />
-          </div>
-
-          {/* Multi-image Dropzone */}
-          <div>
-            <label className="block mb-1 font-bold text-[var(--booking-page-label-color)]">
-              {t("bookingPage.uploadImages")}
-            </label>
-            <div
-              {...getRootProps()}
-              className={`border-dashed border-2 rounded-lg p-6 text-center cursor-pointer transition
-                ${isDragActive ? "border-[var(--booking-page-dropzone-active-border)] bg-[var(--booking-page-dropzone-active-background)]"
-                               : "border-[var(--booking-page-dropzone-border)] bg-[var(--booking-page-dropzone-background)]"}`}
-            >
-              <input {...getInputProps()} />
-              {isDragActive ? (
-                <p className="text-[var(--booking-page-text-color)]">{t("bookingPage.dragImagesActive")}</p>
-              ) : (
-                <p className="text-[var(--booking-page-text-color)]">{t("bookingPage.dragImagesInactive")}</p>
-              )}
-            </div>
-
-            {/* Previews with remove button */}
-            {files.length > 0 && (
-              <div className="mt-4 flex flex-wrap gap-4">
-                {files.map((file, index) => (
-                  <div key={file.name + index} className="relative w-20 h-20">
-                    <img
-                      src={previews[index]}
-                      alt={`preview-${index}`}
-                      className="w-20 h-20 object-cover rounded-lg border-[var(--booking-page-preview-border)]"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeImage(index)}
-                      className="absolute top-0 right-0 rounded-full w-5 h-5 flex items-center justify-center text-xs bg-[var(--booking-page-remove-button-bg)] text-[var(--booking-page-remove-button-text)] hover:bg-[var(--booking-page-remove-button-hover)]"
-                    >
-                      ×
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Submit */}
           <button
             type="submit"
             disabled={isSending}
-            className={`w-full py-3 rounded-lg transition bg-[var(--booking-page-submit-bg)] text-[var(--booking-page-submit-text)] hover:bg-[var(--booking-page-submit-hover)] disabled:bg-[var(--booking-page-submit-disabled)] disabled:cursor-not-allowed`}
+            className="w-full py-3 rounded-lg font-semibold text-white 
+              bg-gradient-to-r from-pink-500 to-rose-500 
+              hover:from-pink-600 hover:to-rose-600 
+              transition-all duration-200 
+              shadow-md hover:shadow-lg 
+              disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {t("bookingPage.requestBooking")}
+            {isSending ? "Sending..." : "Request Booking"}
           </button>
+
         </form>
-
-        {/* Uploading Modal */}
-        {isUploading && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-            <div className="bg-[var(--booking-page-modal-bg)] p-6 rounded-lg shadow-lg border pointer-events-auto">
-              <p className="text-lg font-medium text-[var(--booking-page-modal-text)]">
-                {t("bookingPage.processingImages")}
-              </p>
-            </div>
-            <div className="fixed inset-0 bg-[var(--booking-page-modal-overlay)]"></div>
-          </div>
-        )}
-
-        {/* Sending Modal */}
-        {isSending && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-            <div className="bg-[var(--booking-page-modal-bg)] p-6 rounded-lg shadow-lg border pointer-events-auto">
-              <p className="text-lg font-medium text-[var(--booking-page-modal-text)]">
-                {t("bookingPage.sendingEmail")}
-              </p>
-            </div>
-            <div className="fixed inset-0 bg-[var(--booking-page-modal-overlay)]"></div>
-          </div>
-        )}
-
-        {/* Notification */}
-        {notification && (
-          <div
-            className={`fixed top-4 right-4 z-50 px-4 py-3 rounded shadow-lg text-[var(--booking-page-notification-text)] transition-all duration-300 transform ${
-              notification.type === "success"
-                ? "bg-[var(--booking-page-notification-success)]"
-                : "bg-[var(--booking-page-notification-error)]"
-            } animate-slide-in`}
-          >
-            {notification.message}
-          </div>
-        )}
       </div>
     </main>
   );
