@@ -37,7 +37,7 @@ export default function InformationPage() {
               {t("informationPage.hennaTitle")}
             </h2>
 
-            <div className="space-y-4 text-[var(--information-page-body-text)] leading-relaxed">
+            <div className="space-y-4 text-[var(--information-page-body-text)] leading-relaxed text-justify">
               <p>{t("informationPage.hennaParagraph1")}</p>
               <p>{t("informationPage.hennaParagraph2")}</p>
             </div>
@@ -49,7 +49,7 @@ export default function InformationPage() {
               {t("informationPage.jaguaTitle")}
             </h2>
 
-            <div className="text-[var(--information-page-body-text)] leading-relaxed">
+            <div className="text-[var(--information-page-body-text)] leading-relaxed text-justify">
               <p>{t("informationPage.jaguaParagraph")}</p>
             </div>
           </div>
