@@ -2,9 +2,11 @@
 
 import { useCart } from "@/components/cartContext";
 import { useTranslation } from "react-i18next";
+
 type Product = {
+  id: string;
   name: string;
-  price: string;
+  price: number;
   image: string;
 };
 
@@ -16,8 +18,9 @@ export default function AddToCartButton({ product }: { product: Product }) {
     <button
       onClick={() =>
         addToCart({
+          id: product.id,
           name: product.name,
-          price: product.price,
+          price: Number(product.price), // ensure numeric
           image: product.image,
         })
       }

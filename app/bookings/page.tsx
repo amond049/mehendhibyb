@@ -16,13 +16,27 @@ export default function BookingPage() {
     people: 1,
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [files, setFiles] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [isSending, setIsSending] = useState(false);
+
   const [notification, setNotification] = useState<{
     type: "success" | "error";
     message: string;
   } | null>(null);
+
+  // VALIDATION
+  const validate = () => {
+    const newErrors: Record<string, string> = {};
+    if (!form.name) newErrors.name = "This field is required";
+    if (!form.email) newErrors.email = "This field is required";
+    if (!form.service) newErrors.service = "This field is required";
+    if (!form.date) newErrors.date = "This field is required";
+    if (!form.people || form.people < 1) newErrors.people = "Must be at least 1";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -32,11 +46,13 @@ export default function BookingPage() {
       ...prev,
       [name]: name === "people" ? Number(value) : value,
     }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const heic2any = (await import("heic2any")).default;
     setIsUploading(true);
+
     const newFiles: File[] = [];
 
     for (const file of acceptedFiles) {
@@ -44,11 +60,7 @@ export default function BookingPage() {
       if (file.type === "image/heic" || file.name.toLowerCase().endsWith(".heic")) {
         try {
           const blob = await heic2any({ blob: file, toType: "image/jpeg" });
-          finalFile = new File(
-            [blob as Blob],
-            file.name.replace(/\.heic$/i, ".jpg"),
-            { type: "image/jpeg" }
-          );
+          finalFile = new File([blob as Blob], file.name.replace(/\.heic$/i, ".jpg"), { type: "image/jpeg" });
         } catch (err) {
           console.error("HEIC conversion failed:", err);
           continue;
@@ -61,7 +73,7 @@ export default function BookingPage() {
     setIsUploading(false);
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
       "image/jpeg": [],
@@ -73,25 +85,19 @@ export default function BookingPage() {
     multiple: true,
   });
 
-  const removeImage = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
-  };
-
   const previews = useMemo(() => files.map((file) => URL.createObjectURL(file)), [files]);
-
-  useEffect(() => {
-    return () => previews.forEach((url) => URL.revokeObjectURL(url));
-  }, [previews]);
+  useEffect(() => () => previews.forEach((url) => URL.revokeObjectURL(url)), [previews]);
 
   useEffect(() => {
     if (notification) {
-      const timer = setTimeout(() => setNotification(null), 4000); // hide after 4s
+      const timer = setTimeout(() => setNotification(null), 3500);
       return () => clearTimeout(timer);
     }
   }, [notification]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!validate()) return;
 
     setIsSending(true);
     const formData = new FormData();
@@ -101,7 +107,6 @@ export default function BookingPage() {
     formData.append("date", form.date);
     formData.append("message", form.message);
     formData.append("people", form.people.toString());
-
     files.forEach((file) => formData.append("files", file));
 
     try {
@@ -109,190 +114,113 @@ export default function BookingPage() {
       if (res.ok) {
         setForm({ name: "", email: "", service: "", date: "", message: "", people: 1 });
         setFiles([]);
-        setNotification({ type: "success", message: t("bookingPage.bookingSuccess") });
+        setNotification({ type: "success", message: "Booking request sent!" });
       } else {
-        setNotification({ type: "error", message: t("bookingPage.bookingError") });
+        setNotification({ type: "error", message: "Something went wrong." });
       }
     } catch (err) {
       console.error(err);
-      setNotification({ type: "error", message: t("bookingPage.bookingError") });
+      setNotification({ type: "error", message: "Something went wrong." });
     } finally {
       setIsSending(false);
     }
   };
 
   return (
-    <main className="min-h-screen bg-[var(--booking-page-background)] flex justify-center px-6 py-20 relative">
-      <div className="max-w-3xl w-full bg-[var(--booking-page-form-background)] rounded-2xl shadow-lg p-10 relative">
-        <h1 className="font-bold text-4xl italic text-center mb-10">{t("bookingPage.bookAnAppointment")}</h1>
+    <main className="min-h-screen flex justify-center items-start py-20 px-6 bg-gradient-to-b from-[#F4F6ED] to-[#E8F0D7]">
+      
+      {/* Toast */}
+      {notification && (
+        <div
+          className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3 rounded-xl shadow-lg transition-all duration-300 ${
+            notification.type === "success" ? "bg-green-500 text-white" : "bg-red-500 text-white"
+          }`}
+        >
+          <span className="text-lg">{notification.type === "success" ? "✔" : "⚠"}</span>
+          <p className="text-sm font-medium">{notification.message}</p>
+          <button onClick={() => setNotification(null)} className="ml-2 text-white/80 hover:text-white">✕</button>
+        </div>
+      )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <p className="black mb-1">
-              {t("bookingPage.description")}
-            </p>
-            <p className="black mb-2 font-bold">
-              {t("bookingPage.instagramNotice")}
-            </p>
+      <div className="max-w-3xl w-full bg-[#FDFBF4] rounded-3xl shadow-xl p-10 flex flex-col gap-6">
+        <h1 className="text-4xl font-bold italic text-center text-[#3A3D2A] mb-8">
+          {t("bookingPage.bookAnAppointment")}
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+
+          <input
+            name="name"
+            placeholder="Name"
+            value={form.name}
+            onChange={handleChange}
+            className={`w-full border rounded-lg px-4 py-2 text-[#3A3D2A] bg-white placeholder-[#6B7B55] focus:outline-none focus:ring-2 focus:ring-[#FDE47C] ${errors.name ? "border-red-500" : "border-[#6B7B55]"}`}
+          />
+          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            className={`w-full border rounded-lg px-4 py-2 text-[#3A3D2A] bg-white placeholder-[#6B7B55] focus:outline-none focus:ring-2 focus:ring-[#FDE47C] ${errors.email ? "border-red-500" : "border-[#6B7B55]"}`}
+          />
+          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+
+          <select
+            name="service"
+            value={form.service}
+            onChange={handleChange}
+            className={`w-full border rounded-lg px-4 py-2 text-[#3A3D2A] bg-white focus:outline-none focus:ring-2 focus:ring-[#FDE47C] ${errors.service ? "border-red-500" : "border-[#6B7B55]"}`}
+          >
+            <option value="">Select a service</option>
+            <option value="service1">Service 1</option>
+            <option value="service2">Service 2</option>
+            <option value="service3">Service 3</option>
+          </select>
+          {errors.service && <p className="text-red-500 text-sm">{errors.service}</p>}
+
+          <input
+            name="date"
+            type="date"
+            value={form.date}
+            onChange={handleChange}
+            className={`w-full border rounded-lg px-4 py-2 text-[#3A3D2A] bg-white focus:outline-none focus:ring-2 focus:ring-[#FDE47C] ${errors.date ? "border-red-500" : "border-[#6B7B55]"}`}
+          />
+          {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
+
+          <input
+            name="people"
+            type="number"
+            min={1}
+            value={form.people}
+            onChange={handleChange}
+            className={`w-full border rounded-lg px-4 py-2 text-[#3A3D2A] bg-white focus:outline-none focus:ring-2 focus:ring-[#FDE47C] ${errors.people ? "border-red-500" : "border-[#6B7B55]"}`}
+          />
+          {errors.people && <p className="text-red-500 text-sm">{errors.people}</p>}
+
+          <textarea
+            name="message"
+            placeholder="Message (optional)"
+            value={form.message}
+            onChange={handleChange}
+            className="w-full border rounded-lg px-4 py-2 text-[#3A3D2A] bg-white h-28 focus:outline-none focus:ring-2 focus:ring-[#FDE47C] border-[#6B7B55]"
+          />
+
+          <div {...getRootProps()} className="border-2 border-dashed border-[#6B7B55] rounded-lg p-6 text-center cursor-pointer hover:bg-[#E6F0D8] transition-colors">
+            <input {...getInputProps()} />
+            <p className="text-[#3A3D2A]">Drag & drop images here, or click to upload</p>
           </div>
 
-          {/* Name */}
-          <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.name")}</label>
-            <input
-              name="name"
-              type="text"
-              value={form.name}
-              onChange={handleChange}
-              placeholder={t("bookingPage.namePlaceholder")}
-              className="w-full border rounded-lg px-4 py-2"
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.email")}</label>
-            <input
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder={t("bookingPage.emailPlaceholder")}
-              className="w-full border rounded-lg px-4 py-2"
-            />
-          </div>
-
-          {/* Service */}
-          <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.service")}</label>
-            <select
-              name="service"
-              value={form.service}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2"
-            >
-              <option value="">{t("bookingPage.service")}</option>
-              <option value="service1">{t("bookingPage.service1")}</option>
-              <option value="service2">{t("bookingPage.service2")}</option>
-              <option value="service3">{t("bookingPage.service3")}</option>
-            </select>
-          </div>
-
-          {/* Date */}
-          <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.date")}</label>
-            <input
-              name="date"
-              type="date"
-              value={form.date}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2"
-            />
-          </div>
-
-          {/* Number of People */}
-          <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.numberOfPeople")}</label>
-            <input
-              name="people"
-              type="number"
-              min={1}
-              value={form.people}
-              onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2"
-            />
-          </div>
-
-          {/* Message */}
-          <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.message")}</label>
-            <textarea
-              name="message"
-              value={form.message}
-              onChange={handleChange}
-              placeholder={t("bookingPage.messagePlaceholder")}
-              className="w-full border rounded-lg px-4 py-2 h-28"
-            />
-          </div>
-
-          {/* Multi-image Dropzone */}
-          <div>
-            <label className="block mb-1 font-bold">{t("bookingPage.uploadImages")}</label>
-            <div
-              {...getRootProps()}
-              className={`border-dashed border-2 rounded-lg p-6 text-center cursor-pointer transition
-                ${isDragActive ? "border-blue-500 bg-blue-50" : "border-gray-300 bg-white"}`}
-            >
-              <input {...getInputProps()} />
-              {isDragActive ? (
-                <p>{t("bookingPage.dragImagesActive")}</p>
-              ) : (
-                <p>{t("bookingPage.dragImagesInactive")}</p>
-              )}
-            </div>
-
-            {/* Previews with remove button */}
-            {files.length > 0 && (
-              <div className="mt-4 flex flex-wrap gap-4">
-                {files.map((file, index) => (
-                  <div key={file.name + index} className="relative w-20 h-20">
-                    <img
-                      src={previews[index]}
-                      alt={`preview-${index}`}
-                      className="w-20 h-20 object-cover rounded-lg border"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeImage(index)}
-                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
-                    >
-                      ×
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Submit */}
           <button
             type="submit"
             disabled={isSending}
-            className={`w-full py-3 rounded-lg transition ${isSending ? "bg-gray-500 cursor-not-allowed" : "bg-gray-900 text-white hover:bg-black"}`}
+            className="w-full py-3 rounded-lg font-semibold text-[#FDFBF4] bg-[#6B7B55] hover:bg-[#5C6B4B] transition-colors shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {t("bookingPage.requestBooking")}
+            {isSending ? "Sending..." : "Request Booking"}
           </button>
         </form>
-
-        {/* Small non-intrusive uploading modal */}
-        {isUploading && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-            <div className="bg-white p-6 rounded-lg shadow-lg border pointer-events-auto">
-              <p className="text-lg font-medium">{t("bookingPage.processingImages")}</p>
-            </div>
-            <div className="fixed inset-0 bg-black opacity-20"></div>
-          </div>
-        )}
-
-        {/* Sending email modal */}
-        {isSending && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-            <div className="bg-white p-6 rounded-lg shadow-lg border pointer-events-auto">
-              <p className="text-lg font-medium">{t("bookingPage.sendingEmail")}</p>
-            </div>
-            <div className="fixed inset-0 bg-black opacity-20"></div>
-          </div>
-        )}
-
-        {/* Notification */}
-        {notification && (
-          <div
-            className={`fixed top-4 right-4 z-50 px-4 py-3 rounded shadow-lg text-white transition
-              ${notification.type === "success" ? "bg-green-500" : "bg-red-500"}`}
-          >
-            {notification.message}
-          </div>
-        )}
       </div>
     </main>
   );
