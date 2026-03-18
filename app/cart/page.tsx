@@ -144,6 +144,7 @@ export default function CartPage() {
                 <p className="mt-2 text-sm text-[#3A3D2A]/70 italic text-center">
                   If you would like a refund, please reach out to us and we will assist you with the process!
                 </p>
+                <p className="mt-2 text-sm text-[#3A3D2A]/70 italic text-center">There is a small issue with processing receipts right now so do not fret if you do not see an email immediately, we are getting the order on our end and will process it ASAP!</p>
             </>
           )}
 
