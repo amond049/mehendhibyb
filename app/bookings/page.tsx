@@ -174,10 +174,10 @@ export default function BookingPage() {
             onChange={handleChange}
             className={`w-full border rounded-lg px-4 py-2 text-[#3A3D2A] bg-white focus:outline-none focus:ring-2 focus:ring-[#FDE47C] ${errors.service ? "border-red-500" : "border-[#6B7B55]"}`}
           >
-            <option value="">Select a service</option>
-            <option value="service1">Service 1</option>
-            <option value="service2">Service 2</option>
-            <option value="service3">Service 3</option>
+            <option value="" disabled selected hidden>Select a service</option>
+            <option value="service1">{t('bookingPage.service1')}</option>
+            <option value="service2">{t('bookingPage.service2')}</option>
+            <option value="service3">{t('bookingPage.service3')}</option>
           </select>
           {errors.service && <p className="text-red-500 text-sm">{errors.service}</p>}
 
