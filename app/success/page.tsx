@@ -26,12 +26,17 @@ export default function SuccessPage() {
     if (!sessionId) return;
 
     const fetchSession = async () => {
-      const res = await fetch(`/api/checkout/session-status?session_id=${sessionId}`);
-      const data = await res.json();
-      setReceipt(data);
-      setLoading(false);
-
-      clearCart();
+      try {
+        const res = await fetch(`/api/checkout/session-status?session_id=${sessionId}`);
+        if (!res.ok) throw new Error("Failed to fetch session");
+        const data = await res.json();
+        setReceipt(data);
+        clearCart();
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchSession();
@@ -47,9 +52,7 @@ export default function SuccessPage() {
 
   return (
     <main className="min-h-screen flex justify-center items-center bg-[#FDFDFD] px-6 py-20 text-[#3A3D2A]">
-
       <div className="bg-[#FDFDFD] p-8 rounded-2xl shadow-md w-full max-w-xl border border-[#3A3D2A]/20">
-
         <h1 className="text-3xl font-bold mb-4 text-center text-[#2E3022]">
           Payment Successful 🎉
         </h1>
@@ -58,12 +61,9 @@ export default function SuccessPage() {
           Thank you for your order. A receipt has been sent to your email.
         </p>
 
-        {receipt && (
+        {receipt ? (
           <div className="border border-[#3A3D2A]/30 rounded-lg p-6 space-y-3 bg-[#FDFDFD]">
-
-            <h2 className="text-xl font-semibold mb-2 text-[#2E3022]">
-              Receipt
-            </h2>
+            <h2 className="text-xl font-semibold mb-2 text-[#2E3022]">Receipt</h2>
 
             <div className="flex justify-between">
               <p>Email</p>
@@ -73,11 +73,13 @@ export default function SuccessPage() {
             <div className="flex justify-between">
               <p>Total Paid</p>
               <p>
-                ${(receipt.amount_total / 100).toFixed(2)} {receipt.currency.toUpperCase()}
+                ${(receipt.amount_total / 100).toFixed(2)}{" "}
+                {receipt.currency.toUpperCase()}
               </p>
             </div>
-
           </div>
+        ) : (
+          <p className="text-center text-red-500">Receipt not found.</p>
         )}
 
         <Link
@@ -86,9 +88,7 @@ export default function SuccessPage() {
         >
           Return to Store
         </Link>
-
       </div>
-
     </main>
   );
 }
