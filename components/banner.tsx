@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Banner() {
   return (
     <div className="w-full flex justify-center px-4 sm:px-6 lg:px-8 mt-8">
@@ -13,18 +15,13 @@ export default function Banner() {
           bg-gradient-to-r from-[var(--banner-background-starting-color)] to-[var(--banner-background-ending-color)]
         "
       >
-        <h1
-          className="
-            text-[var(--banner-text-color)]
-            font-script
-            text-4xl
-            sm:text-6xl
-            md:text-7xl
-            lg:text-8xl
-          "
-        >
-          Welcome!
-        </h1>
+        <Image
+          src="/assets/logo.png" // replace with your actual image file name
+          alt="Banner"
+          width={550} // adjust width as needed
+          height={331} // adjust height as needed
+          className="object-contain"
+        />
       </div>
     </div>
   );

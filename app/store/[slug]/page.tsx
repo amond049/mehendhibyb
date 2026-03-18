@@ -64,7 +64,7 @@ export default function ProductPage({ params }: ProductPageProps) {
             {normalizedProduct.name}
           </h1>
           <p className="text-[#B2A36B] text-xl font-semibold mb-6">
-            ${normalizedProduct.price}
+            ${normalizedProduct.price.toFixed(2)}
           </p>
           <p className="text-[#3A3D2A] mb-8">{normalizedProduct.description}</p>
 

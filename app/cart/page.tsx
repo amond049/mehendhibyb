@@ -68,7 +68,7 @@ export default function CartPage() {
 
                 <div>
                   <p className="font-semibold">{item.name}</p>
-                  <p>${item.price} × {item.quantity} = ${(item.price * item.quantity).toFixed(2)}</p>
+                  <p>${item.price.toFixed(2)} × {item.quantity} = ${(item.price * item.quantity).toFixed(2)}</p>
 
                   <div className="flex gap-2 mt-1">
                     <button
@@ -134,12 +134,17 @@ export default function CartPage() {
 
           {/* PAY BUTTON */}
           {cart.length > 0 && (
+            <>
             <button
               onClick={handlePayment}
               className="mt-4 w-full py-3 rounded-lg font-semibold bg-[#B2A36B] text-[#FDFDFD] shadow-md hover:bg-[#A6944D] transition"
             >
               Proceed to Payment
             </button>
+                <p className="mt-2 text-sm text-[#3A3D2A]/70 italic text-center">
+                  If you would like a refund, please reach out to us and we will assist you with the process!
+                </p>
+            </>
           )}
 
           {paymentStatus && <p className="text-[#D46A6A] mt-2">{paymentStatus}</p>}

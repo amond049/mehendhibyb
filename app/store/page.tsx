@@ -62,7 +62,7 @@ export default function StorePage() {
                 <div className="p-4 flex justify-between items-center">
                   <h2 className="font-medium text-lg text-[#3A3D2A]">{product.name}</h2>
                   <span className="text-[#B2A36B] font-semibold">
-                    ${product.price}
+                    ${product.price.toFixed(2)}
                   </span>
                 </div>
               </Link>
