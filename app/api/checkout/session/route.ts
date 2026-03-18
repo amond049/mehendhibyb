@@ -11,26 +11,25 @@ export async function POST(req: NextRequest) {
     const origin = req.headers.get("origin") || "";
 
     const session = await stripe.checkout.sessions.create({
-
       mode: "payment",
-
       payment_method_types: ["card"],
-
+      billing_address_collection: "required",
+      shipping_address_collection: {
+        allowed_countries: ["CA", "US"], // or any countries you ship to
+      },
       line_items: cart.map((item: any) => ({
         price_data: {
           currency: "cad",
           product_data: {
             name: item.name,
-            images: [item.image]
+            images: [item.image],
           },
-          unit_amount: Math.round(item.price * 100)
+          unit_amount: Math.round(item.price * 100),
         },
-        quantity: item.quantity
+        quantity: item.quantity,
       })),
-
       success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/cart`
-
+      cancel_url: `${origin}/cart`,
     });
 
     return NextResponse.json({
