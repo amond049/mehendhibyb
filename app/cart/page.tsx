@@ -7,27 +7,11 @@ import { useState, useMemo } from "react";
 
 const TAX_RATE = 0.13;
 
-function getDeliveryFee(postalCode: string): number {
-  if (!postalCode) return 0;
-  const fsa = postalCode.replace(/\s/g, "").substring(0, 2).toUpperCase();
-
-  if (["K1", "K2", "K3", "K4"].includes(fsa)) return 5;
-  if (["K", "L", "M", "N", "P"].includes(fsa[0])) return 12;
-
-  return 20;
-}
-
 export default function CartPage() {
   const { cart, removeFromCart, decreaseQuantity, addToCart } = useCart();
   const { t } = useTranslation();
 
   const [deliveryMethod, setDeliveryMethod] = useState<"pickup" | "delivery">("pickup");
-  const [street, setStreet] = useState("");
-  const [city, setCity] = useState("");
-  const [province, setProvince] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [country] = useState("Canada");
-
   const [paymentStatus, setPaymentStatus] = useState("");
 
   const subtotal = useMemo(
@@ -37,23 +21,10 @@ export default function CartPage() {
 
   const tax = subtotal * TAX_RATE;
 
-  const deliveryFee = useMemo(
-    () => (deliveryMethod === "delivery" ? getDeliveryFee(postalCode) : 0),
-    [deliveryMethod, postalCode]
-  );
-
-  const total = subtotal + tax + deliveryFee;
-
-  const allDeliveryFieldsFilled =
-    deliveryMethod === "pickup" ||
-    (street && city && province && postalCode);
+  // 🚨 NO delivery fee here anymore
+  const total = subtotal + tax;
 
   const handlePayment = async () => {
-    if (!allDeliveryFieldsFilled) {
-      setPaymentStatus("Please fill out all delivery address fields.");
-      return;
-    }
-
     try {
       const res = await fetch("/api/checkout/session", {
         method: "POST",
@@ -62,14 +33,7 @@ export default function CartPage() {
         },
         body: JSON.stringify({
           cart,
-          deliveryMethod,
-          address: {
-            street,
-            city,
-            province,
-            postalCode,
-            country
-          }
+          deliveryMethod
         })
       });
 
@@ -91,7 +55,7 @@ export default function CartPage() {
     <main className="min-h-screen flex justify-center px-6 py-20 bg-gray-50">
       <div className="max-w-6xl w-full grid md:grid-cols-2 gap-10">
 
-        {/* LEFT SIDE */}
+        {/* LEFT */}
         <div className="space-y-6">
 
           <h1 className="text-4xl italic mb-6 text-center md:text-left">
@@ -99,17 +63,15 @@ export default function CartPage() {
           </h1>
 
           {cart.length === 0 && (
-            <p className="text-lg text-center md:text-left">
-              Your cart is empty.
-            </p>
+            <p>Your cart is empty.</p>
           )}
 
           {cart.map((item, index) => (
             <div
               key={`${item.id}-${index}`}
-              className="flex items-center justify-between bg-white rounded-xl p-4 shadow-sm"
+              className="flex justify-between bg-white p-4 rounded-xl shadow-sm"
             >
-              <div className="flex items-center gap-4">
+              <div className="flex gap-4">
 
                 <div className="relative w-20 h-20">
                   <Image
@@ -122,23 +84,14 @@ export default function CartPage() {
 
                 <div>
                   <p className="font-semibold">{item.name}</p>
-
                   <p>
                     ${item.price} × {item.quantity} = $
                     {(item.price * item.quantity).toFixed(2)}
                   </p>
 
-                  <div className="flex items-center gap-2 mt-1">
-
-                    <button
-                      onClick={() => decreaseQuantity(item.id)}
-                      className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
-                    >
-                      −
-                    </button>
-
+                  <div className="flex gap-2 mt-1">
+                    <button onClick={() => decreaseQuantity(item.id)} className="px-2 py-1 bg-gray-200 rounded">−</button>
                     <span>{item.quantity}</span>
-
                     <button
                       onClick={() =>
                         addToCart({
@@ -148,38 +101,33 @@ export default function CartPage() {
                           image: item.image
                         })
                       }
-                      className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                      className="px-2 py-1 bg-gray-200 rounded"
                     >
                       +
                     </button>
-
                   </div>
-
                 </div>
+
               </div>
 
               <button
                 onClick={() => removeFromCart(item.id)}
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                className="bg-red-500 text-white px-3 py-1 rounded"
               >
                 Remove
               </button>
             </div>
           ))}
 
-          {/* DELIVERY */}
+          {/* DELIVERY TOGGLE */}
           {cart.length > 0 && (
-            <div className="mt-6">
+            <div>
+              <h2 className="text-xl mb-2">Delivery Method</h2>
 
-              <h2 className="text-2xl font-semibold mb-4">
-                Delivery / Pickup
-              </h2>
-
-              <div className="flex gap-4 mb-4">
-
+              <div className="flex gap-4">
                 <button
                   onClick={() => setDeliveryMethod("pickup")}
-                  className={`flex-1 border rounded-lg py-3 ${
+                  className={`flex-1 py-3 rounded border ${
                     deliveryMethod === "pickup"
                       ? "bg-blue-600 text-white"
                       : "bg-white"
@@ -190,7 +138,7 @@ export default function CartPage() {
 
                 <button
                   onClick={() => setDeliveryMethod("delivery")}
-                  className={`flex-1 border rounded-lg py-3 ${
+                  className={`flex-1 py-3 rounded border ${
                     deliveryMethod === "delivery"
                       ? "bg-blue-600 text-white"
                       : "bg-white"
@@ -198,54 +146,17 @@ export default function CartPage() {
                 >
                   Delivery
                 </button>
-
               </div>
-
-              {deliveryMethod === "delivery" && (
-                <div className="flex flex-col gap-3">
-
-                  <input
-                    placeholder="Street Address"
-                    value={street}
-                    onChange={(e) => setStreet(e.target.value)}
-                    className="p-3 border rounded"
-                  />
-
-                  <input
-                    placeholder="City"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    className="p-3 border rounded"
-                  />
-
-                  <input
-                    placeholder="Province"
-                    value={province}
-                    onChange={(e) => setProvince(e.target.value)}
-                    className="p-3 border rounded"
-                  />
-
-                  <input
-                    placeholder="Postal Code"
-                    value={postalCode}
-                    onChange={(e) => setPostalCode(e.target.value)}
-                    className="p-3 border rounded"
-                  />
-
-                </div>
-              )}
-
             </div>
           )}
 
-          {/* PAYMENT */}
+          {/* PAY BUTTON */}
           {cart.length > 0 && (
             <button
               onClick={handlePayment}
-              disabled={!allDeliveryFieldsFilled}
               className="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700"
             >
-              Pay ${total.toFixed(2)}
+              Proceed to Payment
             </button>
           )}
 
@@ -255,13 +166,11 @@ export default function CartPage() {
 
         </div>
 
-        {/* ORDER SUMMARY */}
+        {/* SUMMARY */}
         {cart.length > 0 && (
-          <div className="p-6 bg-white rounded-xl shadow space-y-3">
+          <div className="bg-white p-6 rounded-xl shadow">
 
-            <h2 className="text-2xl font-semibold">
-              Order Summary
-            </h2>
+            <h2 className="text-xl mb-4">Order Summary</h2>
 
             <div className="flex justify-between">
               <p>Subtotal</p>
@@ -273,15 +182,8 @@ export default function CartPage() {
               <p>${tax.toFixed(2)}</p>
             </div>
 
-            {deliveryMethod === "delivery" && (
-              <div className="flex justify-between">
-                <p>Delivery</p>
-                <p>${deliveryFee.toFixed(2)}</p>
-              </div>
-            )}
-
-            <div className="flex justify-between font-bold text-lg border-t pt-2">
-              <p>Total</p>
+            <div className="flex justify-between font-bold border-t pt-2 mt-2">
+              <p>Total (before Stripe)</p>
               <p>${total.toFixed(2)}</p>
             </div>
 

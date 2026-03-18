@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useCart } from "@/components/cartContext"; // ✅ import the context
 
 type Receipt = {
   amount_total: number;
@@ -16,6 +17,8 @@ export default function SuccessPage() {
   const params = useSearchParams();
   const sessionId = params.get("session_id");
 
+  const { clearCart } = useCart(); // ✅ get clearCart function
+
   const [receipt, setReceipt] = useState<Receipt | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -27,10 +30,13 @@ export default function SuccessPage() {
       const data = await res.json();
       setReceipt(data);
       setLoading(false);
+
+      // ✅ Clear the cart once we have a valid receipt
+      clearCart();
     };
 
     fetchSession();
-  }, [sessionId]);
+  }, [sessionId, clearCart]);
 
   if (loading) {
     return (

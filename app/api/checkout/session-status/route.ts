@@ -1,8 +1,30 @@
+"use server";
+
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import fs from "fs";
+import path from "path";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+
+// Path to JSON file storing session IDs for which email was sent
+const SENT_EMAILS_FILE = path.join(process.cwd(), "server/sentEmails.json");
+
+// Read sent emails cache
+function readSentEmails(): string[] {
+  try {
+    const data = fs.readFileSync(SENT_EMAILS_FILE, "utf-8");
+    return JSON.parse(data);
+  } catch {
+    return [];
+  }
+}
+
+// Write sent emails cache
+function writeSentEmails(sent: string[]) {
+  fs.writeFileSync(SENT_EMAILS_FILE, JSON.stringify(sent, null, 2), "utf-8");
+}
 
 export async function GET(req: NextRequest) {
   const sessionId = req.nextUrl.searchParams.get("session_id");
@@ -11,23 +33,16 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "No session id" }, { status: 400 });
   }
 
-  // Tell TypeScript shipping may exist
-  const session = await stripe.checkout.sessions.retrieve(sessionId) as Stripe.Checkout.Session & {
-    shipping?: {
-      name: string;
-      phone?: string;
-      address: {
-        line1: string;
-        line2?: string;
-        city: string;
-        state: string;
-        postal_code: string;
-        country: string;
-      };
-    };
-  };
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-  if (session.payment_status === "paid") {
+  // ✅ Get delivery method from metadata
+  const deliveryMethod = session.metadata?.deliveryMethod;
+
+  // Read sent emails
+  const sentEmails = readSentEmails();
+
+  // Only send email if payment is paid and email has not been sent yet
+  if (session.payment_status === "paid" && !sentEmails.includes(sessionId)) {
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
@@ -40,30 +55,59 @@ export async function GET(req: NextRequest) {
 
     const lineItems = await stripe.checkout.sessions.listLineItems(sessionId);
 
-    const shippingAddress = session.customer_details?.address?.line1 + ", " + session.customer_details?.address?.city + ", " + session.customer_details?.address?.country + ", " + session.customer_details?.address?.postal_code;
+    const itemsText = lineItems.data
+      .map((item) => `Product: ${item.description}\nQuantity: ${item.quantity}`)
+      .join("\n\n");
 
-    const itemsText = lineItems.data.map(
-      (item) => `Product: ${item.description}\nQuantity: ${item.quantity}`
-    ).join("\n\n");
+    // Build address only if delivery
+    const addr = session.customer_details?.address;
+    let formattedAddress = "";
+    if (deliveryMethod === "delivery" && addr) {
+      formattedAddress = [
+        addr.line1,
+        addr.line2,
+        addr.city,
+        addr.state,
+        addr.postal_code,
+        addr.country,
+      ]
+        .filter(Boolean)
+        .join(", ");
+    }
 
+    const emailText = `
+${itemsText}
+
+Customer email: ${session.customer_details?.email}
+Delivery method: ${deliveryMethod}
+
+${
+  deliveryMethod === "delivery"
+    ? `Delivery address: ${formattedAddress}`
+    : "Pickup order (no delivery address)"
+}
+
+Total paid: $${(session.amount_total! / 100).toFixed(2)} ${session.currency?.toUpperCase()}
+`;
+
+    // Send email
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
       subject: "New Order Received",
-      text: `
-${itemsText}
-
-Customer email: ${session.customer_details?.email}
-Delivery address: ${shippingAddress}
-Total paid: $${(session.amount_total! / 100).toFixed(2)} ${session.currency?.toUpperCase()}
-      `,
+      text: emailText,
     });
+
+    // Mark this session as sent
+    sentEmails.push(sessionId);
+    writeSentEmails(sentEmails);
   }
 
   return NextResponse.json({
     amount_total: session.amount_total,
     currency: session.currency,
     customer_details: session.customer_details,
-    shipping: session.shipping ?? null,
+    shipping: session.customer_details?.address ?? null,
+    deliveryMethod: session.metadata?.deliveryMethod ?? null,
   });
 }
