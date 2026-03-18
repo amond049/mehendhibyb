@@ -45,7 +45,7 @@
         "productNotFound": "Product not found"
     },
     "storeListingPage": {
-        "store": "Store"
+        "store": "Welcome to our Storefront!"
     },
     "informationPage": {
         "title": "Want to Learn More?",
@@ -85,7 +85,7 @@
     "sections":{
         "welcomeSection": {
             "welcome": "Welcome",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vestibulum mauris sed lobortis varius."
+            "description": "Welcome to my website, you can find more information about my business and what services I offer here! If you have any questions, please feel free to reach out over Instagram!"
         },
         "contactUs": {
             "contactUs": "Contact Us",

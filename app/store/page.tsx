@@ -21,9 +21,9 @@ export default function StorePage() {
   const { data: products, error } = useSWR("/api/grabProducts", fetcher);
 
   if (error)
-    return <div className="text-center mt-20">Failed to load products</div>;
+    return <div className="text-center mt-20 text-[#3A3D2A] font-medium">Failed to load products</div>;
   if (!products)
-    return <div className="text-center mt-20">Loading...</div>;
+    return <div className="text-center mt-20 text-[#3A3D2A] font-medium">Loading...</div>;
 
   // Normalize API data
   const normalizedProducts: StoreProduct[] = products.map((p: any) => ({
@@ -35,19 +35,20 @@ export default function StorePage() {
   }));
 
   return (
-    <main className="min-h-screen bg-[var(--store-listing-page-background)] px-6 py-20 flex justify-center">
+    <main className="min-h-screen bg-[#FDFDFD] px-6 py-20 flex justify-center">
       <div className="max-w-6xl w-full">
-        <h1 className="text-4xl md:text-5xl italic text-center mb-12">
+        <h1 className="text-4xl md:text-5xl italic text-center mb-12 text-[#2E3022] font-bold">
           {t("storeListingPage.store")}
         </h1>
 
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
           {normalizedProducts.map((product) => (
             <div key={product.id} className="relative group">
+
               {/* Entire card clickable */}
               <Link
                 href={`/store/${product.normalizedName}`}
-                className="block bg-[var(--store-listing-item-background)] rounded-2xl shadow hover:shadow-lg transition overflow-hidden"
+                className="block bg-[#FDFDFD] rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden border-2 border-[#3A3D2A]/20 hover:border-[#B2A36B]"
               >
                 <div className="relative w-full h-48">
                   <Image
@@ -59,8 +60,8 @@ export default function StorePage() {
                 </div>
 
                 <div className="p-4 flex justify-between items-center">
-                  <h2 className="font-medium text-lg">{product.name}</h2>
-                  <span className="text-[var(--store-listing-item-price)] font-semibold">
+                  <h2 className="font-medium text-lg text-[#3A3D2A]">{product.name}</h2>
+                  <span className="text-[#B2A36B] font-semibold">
                     ${product.price}
                   </span>
                 </div>
@@ -74,7 +75,7 @@ export default function StorePage() {
           ))}
         </div>
 
-        <p className="mt-12 text-center text-gray-500 italic">
+        <p className="mt-12 text-center text-[#3A3D2A]/70 italic font-medium">
           More products coming soon!
         </p>
       </div>

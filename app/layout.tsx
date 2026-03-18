@@ -15,19 +15,19 @@ export default function RootLayout({ children }: any) {
         <title>Mehendi by B</title>
         <link rel="icon" type="image/png" href="/assets/favicon.png" />
       </head>
-      <body className="bg-[var(--layout-background)] min-h-screen">
+      <body className="min-h-screen bg-gradient-to-b from-[#F4F6ED] to-[#E8F0D7]">
         <CartProvider>
-        <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+          <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
-        <main
-          className={`
-          transition-all duration-300
-          p-8
-          ${collapsed ? "md:ml-16" : "md:ml-64"}
-        `}
-        >
-          {children}
-        </main>
+          <main
+            className={`
+              transition-all duration-300
+              p-8
+              ${collapsed ? "md:ml-16" : "md:ml-64"}
+            `}
+          >
+            {children}
+          </main>
         </CartProvider>
       </body>
     </html>

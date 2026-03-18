@@ -11,22 +11,22 @@ export default function PortfolioPage() {
 
   if (error)
     return (
-      <div className="text-center mt-10 text-[var(--portfolio-page-error-text)]">
+      <div className="text-center mt-10 text-[#A33F3F]">
         {t("portfolioPage.error")}
       </div>
     );
 
   if (!images)
     return (
-      <div className="text-center mt-10 text-[var(--portfolio-page-loading-text)]">
+      <div className="text-center mt-10 text-[#3A3D2A]/80">
         {t("portfolioPage.loading")}
       </div>
     );
 
   return (
-    <div className="min-h-screen bg-[var(--portfolio-page-background)] p-6">
-      
-      <h1 className="text-3xl font-bold text-center mb-8 text-[var(--portfolio-page-title-text)]">
+    <div className="min-h-screen bg-[#FDFDFD] p-6">
+
+      <h1 className="text-3xl font-bold text-center mb-8 text-[#2E3022]">
         {t("portfolioPage.title")}
       </h1>
 
@@ -36,11 +36,11 @@ export default function PortfolioPage() {
           <div
             key={src}
             className="flex items-center justify-center rounded-lg overflow-hidden 
-            bg-[var(--portfolio-page-card-background)] 
-            shadow-[var(--portfolio-page-card-shadow)] 
-            transition-transform duration-300 
-            hover:scale-105 
-            hover:shadow-[var(--portfolio-page-card-hover-shadow)]"
+              bg-[#FAFAF0] 
+              shadow-md 
+              transition-transform duration-300 
+              hover:scale-105 
+              hover:shadow-lg"
           >
             <img
               src={src}
