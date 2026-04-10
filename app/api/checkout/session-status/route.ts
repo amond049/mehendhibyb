@@ -9,7 +9,7 @@ import path from "path";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 // Path to JSON file storing session IDs for which email was sent
-const SENT_EMAILS_FILE = path.join(process.cwd(), "server/sentEmails.json");
+const SENT_EMAILS_FILE = path.join(process.cwd(), "tmp/sentEmails.json");
 
 // Read sent emails cache
 function readSentEmails(): string[] {
