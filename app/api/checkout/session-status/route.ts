@@ -103,6 +103,7 @@ Total paid: $${(session.amount_total! / 100).toFixed(2)} ${session.currency?.toU
     writeSentEmails(sentEmails);
   }
 
+  console.log("Doing some testing to see if logs print properly?")
   return NextResponse.json({
     amount_total: session.amount_total,
     currency: session.currency,
