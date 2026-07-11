@@ -16,10 +16,10 @@ export default function Banner() {
         "
       >
         <Image
-          src="/assets/logo.png" // replace with your actual image file name
+          src="/assets/bg removed new icon.png" // replace with your actual image file name
           alt="Banner"
-          width={550} // adjust width as needed
-          height={331} // adjust height as needed
+          width={300} // adjust width as needed
+          height={300} // adjust height as needed
           className="object-contain"
         />
       </div>
